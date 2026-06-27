@@ -1,7 +1,7 @@
-import type { ParsedLine, LayoutMetrics } from './types.js';
+import type { ParsedLine, LayoutMetrics, Marker } from './types.js';
 import { FONT_SIZE, LIGHT, DARK } from './palette.js';
 
-const MARKER_CSS_VAR: Record<string, string> = {
+const MARKER_CSS_VAR: Record<Marker, string> = {
   '++': 'added',
   '**': 'changed',
   '~~': 'moved',
