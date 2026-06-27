@@ -56,7 +56,8 @@ Writing rules:
 - One concrete fact per sentence or bullet.
 - Prefer concrete nouns over hand-waving.
 - Cut filler.
-- Skip any section that would be empty or restate the title.
+- Skip any section that would be empty or restate the title — except the two mandatory sections.
+- Always include the "Output preview" (user input → output, rendered when visual) and "Where it lives" (file change tree) sections. Never skip these.
 - Do not add a "Summary" / "What changed" section.
 
 ## Agent setup
