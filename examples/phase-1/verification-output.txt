@@ -1,0 +1,15 @@
+# Phase 1 — scaffold verification output
+
+$ pnpm test
+> vitest run
+No test files found, exiting with code 0
+
+$ pnpm lint
+> eslint src/**/*.ts
+(no output — no violations)
+
+$ pnpm typecheck
+> tsc --noEmit
+(no output — no errors)
+
+All three commands exit 0.
