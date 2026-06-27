@@ -1,0 +1,4 @@
+.
+├── ++ src/legend.ts # new shared legend def
+├── ++ src/fallback.ts # renderFallback
+└── ** src/render.ts # legendText rewired
