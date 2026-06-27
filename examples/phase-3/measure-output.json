@@ -1,0 +1,17 @@
+{
+  "input": [
+    { "raw": ".", "prefix": "", "marker": null, "body": ".", "comment": null },
+    { "raw": "├── ** src/palette.ts", "prefix": "├── ", "marker": "**", "body": "src/palette.ts", "comment": null },
+    { "raw": "└── ** src/layout.ts", "prefix": "└── ", "marker": "**", "body": "src/layout.ts", "comment": null }
+  ],
+  "options": {},
+  "output": {
+    "lineHeight": 27,
+    "charWidth": 10.8,
+    "hPadding": 21,
+    "vPadding": 19,
+    "canvasWidth": 269,
+    "canvasHeight": 173,
+    "legendGap": 27
+  }
+}
