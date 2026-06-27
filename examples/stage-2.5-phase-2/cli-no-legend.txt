@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="118" height="65" role="img" aria-labelledby="ct-okkqtt-title ct-okkqtt-desc">
+  <style>
+    :root {
+      --ct-fill: rgba(246,248,250,0.85);
+      --ct-path: #24292f;
+      --ct-muted: #57606a;
+      --ct-added: #1a7f37;
+      --ct-changed: #9a6700;
+      --ct-moved: #8250df;
+      --ct-removed: #cf222e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ct-fill: rgba(22,27,34,0.85);
+        --ct-path: #e6edf3;
+        --ct-muted: #8b949e;
+        --ct-added: #3fb950;
+        --ct-changed: #d29922;
+        --ct-moved: #bc8cff;
+        --ct-removed: #f85149;
+      }
+    }
+    text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; font-size: 18px; }
+  </style>
+  <title id="ct-okkqtt-title">Change Tree</title>
+  <desc id="ct-okkqtt-desc">Colored Unicode repository tree showing where changes live in a diff. Status markers: ++ added (green), ** changed (yellow), ~~ moved (purple), -- removed (red). Collapsed ... groups are authored summaries, not automatically verified file counts.</desc>
+  <rect width="100%" height="100%" rx="8" fill="var(--ct-fill)" />
+  <text x="21" y="46"><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> a.ts</tspan></text>
+</svg>
+
+++ a.ts

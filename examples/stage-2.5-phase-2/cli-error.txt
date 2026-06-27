@@ -1,0 +1,14 @@
+Usage: change-tree-svg [options]
+
+Input (exactly one):
+  -t, --text <tree>   Change Tree notation as a string
+  -f, --file <path>   read Change Tree notation from a file
+  (or pipe Change Tree notation on stdin)
+
+Output:
+  -o, --output <path> write SVG to a file instead of stdout
+  --no-fallback       omit the plain-text fallback
+
+Other:
+  --no-legend         hide the legend in SVG and fallback
+  -h, --help          show this help

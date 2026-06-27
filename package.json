@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "change-tree-svg": "dist/cli.js"
+    "change-tree-svg": "dist/cli/cli.js"
   },
   "scripts": {
     "build": "tsc",
