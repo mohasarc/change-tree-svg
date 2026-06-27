@@ -4,9 +4,9 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs, USAGE, type CliOptions } from './cli-args.js';
 import { resolveTreeText } from './cli-input.js';
 import { CliError } from './cli-error.js';
-import { RenderError } from './error.js';
+import { RenderError } from './engine/error.js';
 import { render } from './index.js';
-import { renderFallback } from './fallback.js';
+import { renderFallback } from './engine/fallback.js';
 
 export interface CliIO {
   argv: string[];

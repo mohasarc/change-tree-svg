@@ -1,11 +1,11 @@
-import { parseLines } from './parse.js';
-import { measure } from './layout.js';
-import { renderSvg, djb2 } from './render.js';
-import type { RenderOptions } from './types.js';
+import { parseLines } from './engine/parse.js';
+import { measure } from './engine/layout.js';
+import { renderSvg, djb2 } from './engine/render.js';
+import type { RenderOptions } from './engine/types.js';
 
-export { RenderError } from './error.js';
-export { renderFallback } from './fallback.js';
-export type { RenderOptions } from './types.js';
+export { RenderError } from './engine/error.js';
+export { renderFallback } from './engine/fallback.js';
+export type { RenderOptions } from './engine/types.js';
 
 export function render(input: string, options?: Partial<RenderOptions>): string {
   const lines = parseLines(input);
