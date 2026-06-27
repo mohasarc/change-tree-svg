@@ -4,20 +4,7 @@
 
 `change-tree-svg` renders Change Tree notation as an SVG image. Change Tree notation is an authored, high-level overview of where changes live in a diff, using a Unicode filesystem tree, status markers, collapsed groups, and short comments.
 
-Read [`plans/000/change-tree-svg-functional-spec.md`](plans/000/change-tree-svg-functional-spec.md) before changing behavior. That spec is the source of truth until implementation docs exist.
-
-## Current state
-
-This repository currently contains the functional spec and shared agent setup. Implementation scaffolding has not been added yet.
-
-When adding the package, keep the scope narrow:
-
-- Input is authored Change Tree text.
-- Output is SVG.
-- The package does not read git diffs.
-- The package does not decide what changed.
-- The package does not post to GitHub.
-- The package does not validate the Change Tree against a diff.
+Read [`plans/000/change-tree-svg-functional-spec.md`](plans/000/change-tree-svg-functional-spec.md) before changing behavior. That spec is the source of truth for behavior.
 
 ## Change Tree notation
 
@@ -41,10 +28,6 @@ Authoring rules:
 - Place `~~` moved entries at their new path and note the old path in a short comment.
 - Keep comments short and useful for review.
 
-## Day-to-day commands
-
-No package commands are defined yet. Once the implementation is scaffolded, document install, test, lint, typecheck, build, and local usage commands here.
-
 ## TDD
 
 Write the failing test first, then make it pass. Every behavior the package performs should have a test that would fail without it. Commit the red test as its own commit when the failure is informative; otherwise pair it with the implementation.
@@ -56,9 +39,11 @@ Write the failing test first, then make it pass. Every behavior the package perf
 - Name what a value is, not the generic role it plays.
 - Spell out abbreviations in directory and file names.
 - Break large functions into smaller named functions.
-- Prefer clear, small TypeScript modules with explicit types at public boundaries once TypeScript code exists.
+- Prefer clear, small modules with explicit types at public boundaries.
 - Reuse existing utilities before adding dependencies or new abstractions.
 - Keep behavior deterministic and non-interactive by default.
+- Keep scope narrow: authored Change Tree text in, SVG out.
+- Do not expand scope into git diff parsing, GitHub posting, automatic summary generation, or validation against real diffs unless the functional spec changes first.
 - Update docs and examples whenever user-visible behavior changes.
 
 ## PR descriptions
