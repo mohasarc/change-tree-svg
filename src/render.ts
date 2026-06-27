@@ -109,12 +109,13 @@ export function renderSvg(lines: ParsedLine[], metrics: LayoutMetrics, inputHash
     .map((line, i) => treeLineText(line, hPadding, vPadding + (i + 1) * lineHeight))
     .join('\n');
 
+  const legend = metrics.legend ? `\n${legendText(hPadding, legendY)}` : '';
+
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasHeight}" role="img" aria-labelledby="${titleId} ${descId}">
   ${buildStyle()}
   <title id="${titleId}">Change Tree</title>
   <desc id="${descId}">${DESC_TEXT}</desc>
   <rect width="100%" height="100%" rx="8" fill="var(--ct-fill)" />
-${treeLines}
-${legendText(hPadding, legendY)}
+${treeLines}${legend}
 </svg>`;
 }

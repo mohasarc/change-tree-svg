@@ -76,6 +76,24 @@ describe('render() — legend', () => {
   });
 });
 
+describe('render() — legend toggle', () => {
+  it('legend:false omits the "++ added" legend segment but keeps markers and tree lines', () => {
+    const svg = render(SIMPLE_TREE, { legend: false });
+    expect(svg).not.toContain('<tspan fill="var(--ct-muted)"> added   </tspan>');
+    expect(svg).toContain('--ct-added');
+    expect(svg).toContain('src/index.ts');
+    expect(svg).toContain('src/old.ts');
+  });
+
+  it('default render keeps the legend (Stage 1 regression)', () => {
+    expect(render(SIMPLE_TREE)).toContain('<tspan fill="var(--ct-muted)"> added   </tspan>');
+  });
+
+  it('legend:false is deterministic', () => {
+    expect(render(SIMPLE_TREE, { legend: false })).toBe(render(SIMPLE_TREE, { legend: false }));
+  });
+});
+
 describe('render() — accessibility', () => {
   it('has role="img"', () => {
     const svg = render('** src/file.ts');

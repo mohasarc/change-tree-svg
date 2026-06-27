@@ -10,6 +10,7 @@ export interface ParsedLine {
 
 export interface RenderOptions {
   maxLineWidth?: number;
+  legend?: boolean;
 }
 
 export interface LayoutMetrics {
@@ -20,4 +21,5 @@ export interface LayoutMetrics {
   canvasWidth: number;
   canvasHeight: number;
   legendGap: number;
+  legend: boolean;
 }

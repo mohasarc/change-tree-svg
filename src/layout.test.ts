@@ -73,4 +73,23 @@ describe('measure', () => {
     expect(() => measure(lines, { maxLineWidth: 9 })).toThrow('too wide');
     expect(() => measure(lines, { maxLineWidth: 10 })).not.toThrow();
   });
+
+  it('legend:false shrinks canvasHeight by the two reserved rows and sets metrics.legend false', () => {
+    const lines = ['src/', '├── foo.ts', '└── bar.ts'].map(makeLine);
+    const withLegend = measure(lines, {});
+    const withoutLegend = measure(lines, { legend: false });
+    expect(withoutLegend.canvasHeight).toBe(withLegend.canvasHeight - 2 * LINE_HEIGHT);
+    expect(withoutLegend.legend).toBe(false);
+  });
+
+  it('default and legend:true set metrics.legend true with Stage 1 height', () => {
+    const lines = ['src/', '└── bar.ts'].map(makeLine);
+    const stageOneHeight = (lines.length + 2) * LINE_HEIGHT + 2 * V_PADDING;
+    const defaulted = measure(lines, {});
+    const explicit = measure(lines, { legend: true });
+    expect(defaulted.legend).toBe(true);
+    expect(explicit.legend).toBe(true);
+    expect(defaulted.canvasHeight).toBe(stageOneHeight);
+    expect(explicit.canvasHeight).toBe(stageOneHeight);
+  });
 });
