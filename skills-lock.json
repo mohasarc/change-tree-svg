@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "from-stage-to-prs": {
+      "source": "mohasarc/mo-skills",
+      "sourceType": "github",
+      "skillPath": "skills/from-stage-to-prs/SKILL.md",
+      "computedHash": "f727ff8721f3a1005f712440b0f6545309c920018cd858b1978cf8f8fbed102f"
+    },
     "graphite": {
       "source": "withgraphite/agent-skills",
       "sourceType": "github",
