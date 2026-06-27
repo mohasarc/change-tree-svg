@@ -1,0 +1,52 @@
+Stage 2 Phase 3 — CLI argument parsing + input resolution (pure modules)
+
+These are the literal outputs of parseArgs() and resolveTreeText().
+No process wiring yet; both are pure functions.
+
+--- parseArgs(argv) ---
+
+parseArgs(['--text', '.\n└── ++ a.ts', '--no-legend'])
+  => { text: ".\n└── ++ a.ts", file: null, output: null, legend: false, fallback: true, help: false }
+
+parseArgs(['-f', 'tree.txt', '-o', 'out.svg', '--no-fallback'])
+  => { text: null, file: "tree.txt", output: "out.svg", legend: true, fallback: false, help: false }
+
+parseArgs(['--bogus'])
+  => throws CliError: Unknown option: --bogus
+
+parseArgs(['--text'])          # flag with no value
+  => throws CliError: Missing value for --text
+
+--- resolveTreeText(sources) ---
+
+resolveTreeText({ text: '.\n└── ++ a.ts', file: null, stdin: null })
+  => ".\n└── ++ a.ts"
+
+resolveTreeText({ text: 'a', file: null, stdin: 'b' })     # two modes
+  => throws CliError: exactly one Change Tree input must be provided
+
+resolveTreeText({ text: null, file: null, stdin: null })   # no mode
+  => throws CliError: Change Tree input is required
+
+resolveTreeText({ text: '   ', file: null, stdin: null })  # whitespace-only
+  => throws CliError: Change Tree input is required
+
+resolveTreeText({ text: null, file: 'missing.txt', stdin: null })
+  => throws CliError: Change Tree file could not be read: missing.txt
+
+--- USAGE ---
+
+Usage: change-tree-svg [options]
+
+Input (exactly one):
+  -t, --text <tree>   Change Tree notation as a string
+  -f, --file <path>   read Change Tree notation from a file
+  (or pipe Change Tree notation on stdin)
+
+Output:
+  -o, --output <path> write SVG to a file instead of stdout
+  --no-fallback       omit the plain-text fallback
+
+Other:
+  --no-legend         hide the legend in SVG and fallback
+  -h, --help          show this help
