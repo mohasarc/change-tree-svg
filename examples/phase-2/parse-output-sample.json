@@ -1,0 +1,51 @@
+[
+  {
+    "raw": ".",
+    "prefix": "",
+    "marker": null,
+    "body": ".",
+    "comment": null
+  },
+  {
+    "raw": "├── ++ src/render.ts # new renderer",
+    "prefix": "├── ",
+    "marker": "++",
+    "body": "src/render.ts",
+    "comment": "# new renderer"
+  },
+  {
+    "raw": "│   ** src/parse.ts",
+    "prefix": "│   ",
+    "marker": "**",
+    "body": "src/parse.ts",
+    "comment": null
+  },
+  {
+    "raw": "│   ~~ context/ # moved from apps/cli/context/",
+    "prefix": "│   ",
+    "marker": "~~",
+    "body": "context/",
+    "comment": "# moved from apps/cli/context/"
+  },
+  {
+    "raw": "└── -- old/api.ts",
+    "prefix": "└── ",
+    "marker": "--",
+    "body": "old/api.ts",
+    "comment": null
+  },
+  {
+    "raw": "",
+    "prefix": "",
+    "marker": null,
+    "body": "",
+    "comment": null
+  },
+  {
+    "raw": "    ... 4 files # test fixtures",
+    "prefix": "",
+    "marker": null,
+    "body": "    ... 4 files # test fixtures",
+    "comment": null
+  }
+]

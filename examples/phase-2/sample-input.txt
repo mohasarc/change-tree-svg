@@ -1,0 +1,7 @@
+.
+├── ++ src/render.ts # new renderer
+│   ** src/parse.ts
+│   ~~ context/ # moved from apps/cli/context/
+└── -- old/api.ts
+
+    ... 4 files # test fixtures
