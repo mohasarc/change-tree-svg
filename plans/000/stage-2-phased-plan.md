@@ -15,10 +15,10 @@ After this stage a caller can supply a Change Tree by direct text, pipe, or file
 Stage 1 (landed) is a pure library:
 
 - `render(input, options?): string` ([`src/index.ts`](../../src/index.ts)) composes `parseLines` → `measure` → `renderSvg`.
-- `parseLines` ([`src/parse.ts`](../../src/parse.ts)) → `ParsedLine[]`, preserving `raw`.
-- `measure` ([`src/layout.ts`](../../src/layout.ts)) → `LayoutMetrics`; throws `RenderError` for empty tree / over-wide line. Canvas height is `(lines.length + 2) * LINE_HEIGHT + 2 * V_PADDING` — the `+2` reserves the gap row + legend row.
-- `renderSvg` ([`src/render.ts`](../../src/render.ts)) emits the SVG. `legendText` (render.ts:83) hardcodes the colored legend tspans; `legendY = vPadding + (lines.length + 1.5) * lineHeight` (render.ts:106).
-- Constants in [`src/palette.ts`](../../src/palette.ts); types in [`src/types.ts`](../../src/types.ts); `RenderError` in [`src/error.ts`](../../src/error.ts) — `message` is already `Cannot render tree: <reason>.`.
+- `parseLines` ([`src/parse.ts`](../../src/engine/parse.ts)) → `ParsedLine[]`, preserving `raw`.
+- `measure` ([`src/layout.ts`](../../src/engine/layout.ts)) → `LayoutMetrics`; throws `RenderError` for empty tree / over-wide line. Canvas height is `(lines.length + 2) * LINE_HEIGHT + 2 * V_PADDING` — the `+2` reserves the gap row + legend row.
+- `renderSvg` ([`src/render.ts`](../../src/engine/render.ts)) emits the SVG. `legendText` (render.ts:83) hardcodes the colored legend tspans; `legendY = vPadding + (lines.length + 1.5) * lineHeight` (render.ts:106).
+- Constants in [`src/palette.ts`](../../src/engine/palette.ts); types in [`src/types.ts`](../../src/engine/types.ts); `RenderError` in [`src/error.ts`](../../src/engine/error.ts) — `message` is already `Cannot render tree: <reason>.`.
 - Tests colocated as `*.test.ts`, run by vitest. No runtime dependencies. ESM, `NodeNext`, relative imports use `.js`. Build is `tsc` direct.
 
 The legend currently always renders. There is no CLI, no fallback, no file I/O.
