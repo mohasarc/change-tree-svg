@@ -1,0 +1,104 @@
+Stage 2 Phase 4 — change-tree-svg CLI: input modes, output routing, errors
+
+All runs use this tree (via --text; also accepted on stdin or --file):
+  .
+  └── ++ a.ts
+
+=== default: SVG + fallback to stdout (exit 0) ===
+<svg xmlns="http://www.w3.org/2000/svg" width="161" height="146" role="img" aria-labelledby="ct-1kf7tfh-title ct-1kf7tfh-desc">
+  <style>
+    :root {
+      --ct-fill: rgba(246,248,250,0.85);
+      --ct-path: #24292f;
+      --ct-muted: #57606a;
+      --ct-added: #1a7f37;
+      --ct-changed: #9a6700;
+      --ct-moved: #8250df;
+      --ct-removed: #cf222e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ct-fill: rgba(22,27,34,0.85);
+        --ct-path: #e6edf3;
+        --ct-muted: #8b949e;
+        --ct-added: #3fb950;
+        --ct-changed: #d29922;
+        --ct-moved: #bc8cff;
+        --ct-removed: #f85149;
+      }
+    }
+    text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; font-size: 18px; }
+  </style>
+  <title id="ct-1kf7tfh-title">Change Tree</title>
+  <desc id="ct-1kf7tfh-desc">Colored Unicode repository tree showing where changes live in a diff. Status markers: ++ added (green), ** changed (yellow), ~~ moved (purple), -- removed (red). Collapsed ... groups are authored summaries, not automatically verified file counts.</desc>
+  <rect width="100%" height="100%" rx="8" fill="var(--ct-fill)" />
+  <text x="21" y="46"><tspan fill="var(--ct-path)">.</tspan></text>
+  <text x="21" y="73"><tspan fill="var(--ct-muted)">└── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> a.ts</tspan></text>
+  <text x="21" y="113.5"><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-muted)"> added   </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-muted)"> changed   </tspan><tspan fill="var(--ct-moved)">~~</tspan><tspan fill="var(--ct-muted)"> moved   </tspan><tspan fill="var(--ct-removed)">--</tspan><tspan fill="var(--ct-muted)"> removed</tspan></text>
+</svg>
+
+.
+└── ++ a.ts
+
+++ added   ** changed   ~~ moved   -- removed
+
+[exit 0]
+
+=== --no-fallback: pure SVG to stdout, single trailing newline (exit 0) — SVG body elided ===
+<svg xmlns="http://www.w3.org/2000/svg" width="161" height="146" role="img" aria-labelledby="ct-1kf7tfh-title ct-1kf7tfh-desc">
+  (... SVG body ...)
+</svg>
+[exit 0] (stdout ends at </svg> + one newline, no fallback)
+
+=== -o out.svg: pure SVG to file, fallback to stdout (exit 0) ===
+.
+└── ++ a.ts
+
+++ added   ** changed   ~~ moved   -- removed
+[exit 0] (/tmp/ct-out.svg holds render() output verbatim, no trailing newline)
+
+=== --no-legend: legend dropped from SVG and fallback (exit 0) — last 3 stdout lines ===
+
+.
+└── ++ a.ts
+[exit 0]
+
+=== stdin mode: pipe the tree (exit 0) — fallback tail shown ===
+└── ++ a.ts
+
+++ added   ** changed   ~~ moved   -- removed
+[exit 0]
+
+=== collision: --text and stdin both present (exit 1; stderr) ===
+exactly one Change Tree input must be provided
+[exit 1]
+
+=== no input (exit 1; stderr) ===
+Change Tree input is required
+[exit 1]
+
+=== over-wide tree → RenderError (exit 1; stderr) ===
+Cannot render tree: line too wide to render at the current maximum width.
+[exit 1]
+
+=== unknown flag → usage to stderr (exit 1; first line) ===
+Usage: change-tree-svg [options]
+[... full USAGE elided ...]
+
+=== --help → usage to stdout (exit 0) ===
+Usage: change-tree-svg [options]
+
+Input (exactly one):
+  -t, --text <tree>   Change Tree notation as a string
+  -f, --file <path>   read Change Tree notation from a file
+  (or pipe Change Tree notation on stdin)
+
+Output:
+  -o, --output <path> write SVG to a file instead of stdout
+  --no-fallback       omit the plain-text fallback
+
+Other:
+  --no-legend         hide the legend in SVG and fallback
+  -h, --help          show this help
+[exit 0]
+OK
