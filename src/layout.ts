@@ -20,6 +20,7 @@ export function measure(lines: ParsedLine[], options: RenderOptions): LayoutMetr
     }
   }
 
+  const legend = options.legend ?? true;
   const maxLineChars = Math.max(...nonEmpty.map((l) => l.raw.trimEnd().length));
   const canvasWidth = Math.ceil(maxLineChars * CHAR_WIDTH + 2 * H_PADDING);
   const canvasHeight = (lines.length + 2) * LINE_HEIGHT + 2 * V_PADDING;
@@ -32,5 +33,6 @@ export function measure(lines: ParsedLine[], options: RenderOptions): LayoutMetr
     canvasWidth,
     canvasHeight,
     legendGap: LEGEND_GAP,
+    legend,
   };
 }
