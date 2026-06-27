@@ -1,0 +1,15 @@
+.agents/skills/*
+!.agents/skills/*+/
+
+skills-lock.json
+
+.serena
+
+.reviews/
+
+temp/
+
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo

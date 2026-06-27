@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "graphite": {
+      "source": "withgraphite/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/graphite/SKILL.md",
+      "computedHash": "9315b842df6de2a23216a2e72033fa99337398a8d62c11d6c320e55a6b810339"
+    },
+    "improve-codebase-architecture": {
+      "source": "mattpocock/skills",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/improve-codebase-architecture/SKILL.md",
+      "computedHash": "c77b86b4332919499608f9af1880074e1fec65a59b95c70c27a9f39cd137865e"
+    },
+    "trace-code-flow": {
+      "source": "mohasarc/mo-skills",
+      "sourceType": "github",
+      "skillPath": "skills/code-understanding/trace-code-flow/SKILL.md",
+      "computedHash": "f59c5b2218139feeca1bdb377eaf4bb3e7e4397104f7db89c0719f276a54b41a"
+    }
+  }
+}
