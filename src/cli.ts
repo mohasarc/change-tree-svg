@@ -1,4 +1,6 @@
-import { writeFileSync } from 'node:fs';
+#!/usr/bin/env node
+import { writeFileSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { parseArgs, USAGE, type CliOptions } from './cli-args.js';
 import { resolveTreeText } from './cli-input.js';
 import { CliError } from './cli-error.js';
@@ -52,4 +54,16 @@ export function runCli(io: CliIO): number {
     }
     throw err;
   }
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const stdin = process.stdin.isTTY ? null : readFileSync(0, 'utf8');
+  process.exit(
+    runCli({
+      argv: process.argv.slice(2),
+      stdin,
+      stdout: (s) => process.stdout.write(s),
+      stderr: (s) => process.stderr.write(s),
+    }),
+  );
 }
