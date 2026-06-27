@@ -4,6 +4,7 @@ import { renderSvg, djb2 } from './render.js';
 import type { RenderOptions } from './types.js';
 
 export { RenderError } from './error.js';
+export { renderFallback } from './fallback.js';
 export type { RenderOptions } from './types.js';
 
 export function render(input: string, options?: Partial<RenderOptions>): string {

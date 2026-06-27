@@ -1,5 +1,6 @@
 import type { ParsedLine, LayoutMetrics, Marker } from './types.js';
 import { FONT_SIZE, LIGHT, DARK } from './palette.js';
+import { LEGEND_ENTRIES } from './legend.js';
 
 const MARKER_CSS_VAR: Record<Marker, string> = {
   '++': 'added',
@@ -81,16 +82,15 @@ function treeLineText(line: ParsedLine, x: number, y: number): string {
 }
 
 function legendText(x: number, y: number): string {
-  const segs = [
-    `<tspan fill="var(--ct-added)">++</tspan>`,
-    `<tspan fill="var(--ct-muted)"> added   </tspan>`,
-    `<tspan fill="var(--ct-changed)">**</tspan>`,
-    `<tspan fill="var(--ct-muted)"> changed   </tspan>`,
-    `<tspan fill="var(--ct-moved)">~~</tspan>`,
-    `<tspan fill="var(--ct-muted)"> moved   </tspan>`,
-    `<tspan fill="var(--ct-removed)">--</tspan>`,
-    `<tspan fill="var(--ct-muted)"> removed</tspan>`,
-  ].join('');
+  const last = LEGEND_ENTRIES.length - 1;
+  const segs = LEGEND_ENTRIES.flatMap((entry, i) => {
+    const cssVar = MARKER_CSS_VAR[entry.marker];
+    const spacing = i < last ? '   ' : '';
+    return [
+      `<tspan fill="var(--ct-${cssVar})">${entry.marker}</tspan>`,
+      `<tspan fill="var(--ct-muted)"> ${entry.label}${spacing}</tspan>`,
+    ];
+  }).join('');
   return `  <text x="${x}" y="${y}">${segs}</text>`;
 }
 
