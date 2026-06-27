@@ -100,7 +100,7 @@ describe('renderSvg', () => {
     const parsed = parseLines(input);
     const metrics = measure(parsed, { legend: false });
     const svg = renderSvg(parsed, metrics, djb2(input));
-    expect(svg).not.toContain('++ added');
+    expect(svg).not.toContain('<tspan fill="var(--ct-muted)"> added   </tspan>');
     expect(svg).toContain('var(--ct-added)');
   });
 });

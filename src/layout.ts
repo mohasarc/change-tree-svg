@@ -23,7 +23,7 @@ export function measure(lines: ParsedLine[], options: RenderOptions): LayoutMetr
   const legend = options.legend ?? true;
   const maxLineChars = Math.max(...nonEmpty.map((l) => l.raw.trimEnd().length));
   const canvasWidth = Math.ceil(maxLineChars * CHAR_WIDTH + 2 * H_PADDING);
-  const canvasHeight = (lines.length + 2) * LINE_HEIGHT + 2 * V_PADDING;
+  const canvasHeight = (lines.length + (legend ? 2 : 0)) * LINE_HEIGHT + 2 * V_PADDING;
 
   return {
     lineHeight: LINE_HEIGHT,
