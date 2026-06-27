@@ -48,7 +48,20 @@ test("each marker carries its status class", () => {
   const svg = render(SAMPLE_TREE);
   expect(svg).toContain('class="marker-changed"');
   expect(svg).toContain('class="marker-added"');
-  // moved and removed appear in legend even if not in this tree
+});
+
+test("all four marker classes appear when all markers are present", () => {
+  const svg = render(
+    [
+      ".",
+      "├── ++ a.ts",
+      "├── ** b.ts",
+      "├── ~~ c.ts",
+      "└── -- d.ts",
+    ].join("\n"),
+  );
+  expect(svg).toContain('class="marker-added"');
+  expect(svg).toContain('class="marker-changed"');
   expect(svg).toContain('class="marker-moved"');
   expect(svg).toContain('class="marker-removed"');
 });
@@ -56,16 +69,16 @@ test("each marker carries its status class", () => {
 test("style maps marker classes to the four colors", () => {
   const svg = render(SAMPLE_TREE);
   expect(svg).toMatch(
-    new RegExp(`\\.marker-added\\s*\\{[^}]*${LIGHT_PALETTE.markerAdded}`),
+    new RegExp(`\\.marker-added[^}]*\\{[^}]*${LIGHT_PALETTE.markerAdded}`),
   );
   expect(svg).toMatch(
-    new RegExp(`\\.marker-changed\\s*\\{[^}]*${LIGHT_PALETTE.markerChanged}`),
+    new RegExp(`\\.marker-changed[^}]*\\{[^}]*${LIGHT_PALETTE.markerChanged}`),
   );
   expect(svg).toMatch(
-    new RegExp(`\\.marker-moved\\s*\\{[^}]*${LIGHT_PALETTE.markerMoved}`),
+    new RegExp(`\\.marker-moved[^}]*\\{[^}]*${LIGHT_PALETTE.markerMoved}`),
   );
   expect(svg).toMatch(
-    new RegExp(`\\.marker-removed\\s*\\{[^}]*${LIGHT_PALETTE.markerRemoved}`),
+    new RegExp(`\\.marker-removed[^}]*\\{[^}]*${LIGHT_PALETTE.markerRemoved}`),
   );
 });
 
@@ -90,9 +103,11 @@ test("legend appears with marker colors", () => {
 
 test("legend sits below the tree lines", () => {
   const svg = render(SAMPLE_TREE);
-  const legendIndex = svg.indexOf(LEGEND_TEXT);
+  const content = textContent(svg);
+  const legendIndex = content.indexOf(LEGEND_TEXT);
   const lastTreeLine = "exports context surface";
-  expect(svg.indexOf(lastTreeLine)).toBeLessThan(legendIndex);
+  expect(legendIndex).toBeGreaterThanOrEqual(0);
+  expect(content.indexOf(lastTreeLine)).toBeLessThan(legendIndex);
 });
 
 test("style carries light palette by default and dark via media query", () => {
