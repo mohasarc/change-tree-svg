@@ -7,12 +7,17 @@ import { RenderError } from '../engine/error.js';
 import { renderCommand } from './commands/render.js';
 import { sliceCommand } from './commands/slice.js';
 import { markupCommand } from './commands/markup.js';
+import { uploadCommand } from './commands/upload.js';
+import { embedCommand } from './commands/embed.js';
+import { ghRunner, type GhRunner } from './github/gh.js';
 
 export interface CliIO {
   argv: string[];
   stdin: string | null;
   stdout: (s: string) => void;
   stderr: (s: string) => void;
+  gh?: GhRunner;
+  cwd?: string;
 }
 
 export function runCli(io: CliIO): number {
@@ -46,6 +51,10 @@ function dispatch(io: CliIO, options: CliOptions): number {
       return sliceCommand(io, options);
     case 'markup':
       return markupCommand(io, options);
+    case 'upload':
+      return uploadCommand(io, options);
+    case 'embed':
+      return embedCommand(io, options);
     default:
       return renderCommand(io, options);
   }
@@ -69,6 +78,8 @@ if (invokedDirectly()) {
       stdin,
       stdout: (s) => process.stdout.write(s),
       stderr: (s) => process.stderr.write(s),
+      gh: ghRunner,
+      cwd: process.cwd(),
     }),
   );
 }
