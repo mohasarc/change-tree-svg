@@ -8,7 +8,8 @@
     "change-tree-svg": "dist/cli/cli.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
     "test": "vitest run",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit"
