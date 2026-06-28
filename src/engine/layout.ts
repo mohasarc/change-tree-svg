@@ -3,6 +3,7 @@ import type { ParsedLine, LayoutMetrics, RenderOptions } from './types.js';
 import {
   CHAR_WIDTH,
   DEFAULT_MAX_LINE_WIDTH,
+  DESCENT_ALLOWANCE,
   H_PADDING,
   LEGEND_GAP,
   LINE_HEIGHT,
@@ -21,18 +22,22 @@ export function measure(lines: ParsedLine[], options: RenderOptions): LayoutMetr
   }
 
   const legend = options.legend ?? true;
+  const container = options.container ?? false;
+  const hPadding = container ? H_PADDING : 0;
+  const vPadding = container ? V_PADDING : DESCENT_ALLOWANCE;
   const maxLineChars = Math.max(...nonEmpty.map((l) => l.raw.trimEnd().length));
-  const canvasWidth = Math.ceil(maxLineChars * CHAR_WIDTH + 2 * H_PADDING);
-  const canvasHeight = (lines.length + (legend ? 2 : 0)) * LINE_HEIGHT + 2 * V_PADDING;
+  const canvasWidth = Math.ceil(maxLineChars * CHAR_WIDTH + 2 * hPadding);
+  const canvasHeight = (lines.length + (legend ? 2 : 0)) * LINE_HEIGHT + 2 * vPadding;
 
   return {
     lineHeight: LINE_HEIGHT,
     charWidth: CHAR_WIDTH,
-    hPadding: H_PADDING,
-    vPadding: V_PADDING,
+    hPadding,
+    vPadding,
     canvasWidth,
     canvasHeight,
     legendGap: LEGEND_GAP,
     legend,
+    container,
   };
 }

@@ -108,14 +108,14 @@ ${treeLines}${legend}`;
 }
 
 export function renderSvg(lines: ParsedLine[], metrics: LayoutMetrics, inputHash: string): string {
-  const { canvasWidth, canvasHeight } = metrics;
+  const { canvasWidth, canvasHeight, container } = metrics;
   const titleId = `ct-${inputHash}-title`;
   const descId = `ct-${inputHash}-desc`;
+  const rect = container ? '  <rect width="100%" height="100%" rx="8" fill="var(--ct-fill)" />\n' : '';
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasHeight}" role="img" aria-labelledby="${titleId} ${descId}">
   <title id="${titleId}">Change Tree</title>
   <desc id="${descId}">${DESC_TEXT}</desc>
-  <rect width="100%" height="100%" rx="8" fill="var(--ct-fill)" />
-  ${renderInner(lines, metrics)}
+${rect}  ${renderInner(lines, metrics)}
 </svg>`;
 }

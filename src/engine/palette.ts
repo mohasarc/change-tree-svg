@@ -3,6 +3,7 @@ export const CHAR_WIDTH = 0.6 * FONT_SIZE;    // 10.8
 export const LINE_HEIGHT = FONT_SIZE * 1.5;   // 27
 export const H_PADDING = 21;
 export const V_PADDING = 19;
+export const DESCENT_ALLOWANCE = 0.3 * FONT_SIZE;   // 5.4 — bare bottom inset for descenders
 export const LEGEND_GAP = LINE_HEIGHT;
 export const DEFAULT_MAX_LINE_WIDTH = 120;
 
