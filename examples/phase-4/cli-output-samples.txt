@@ -5,7 +5,9 @@ All runs use this tree (via --text; also accepted on stdin or --file):
   └── ++ a.ts
 
 === default: SVG + fallback to stdout (exit 0) ===
-<svg xmlns="http://www.w3.org/2000/svg" width="161" height="146" role="img" aria-labelledby="ct-1kf7tfh-title ct-1kf7tfh-desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="368" height="87.03999999999999" role="img" aria-labelledby="ct-1kf7tfh-title ct-1kf7tfh-desc">
+  <title id="ct-1kf7tfh-title">Change Tree</title>
+  <desc id="ct-1kf7tfh-desc">Colored Unicode repository tree showing where changes live in a diff. Status markers: ++ added (green), ** changed (yellow), ~~ moved (purple), -- removed (red). Collapsed ... groups are authored summaries, not automatically verified file counts.</desc>
   <style>
     :root {
       --ct-fill: rgba(246,248,250,0.85);
@@ -27,14 +29,11 @@ All runs use this tree (via --text; also accepted on stdin or --file):
         --ct-removed: #f85149;
       }
     }
-    text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; font-size: 18px; }
+    text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; font-size: 13.6px; }
   </style>
-  <title id="ct-1kf7tfh-title">Change Tree</title>
-  <desc id="ct-1kf7tfh-desc">Colored Unicode repository tree showing where changes live in a diff. Status markers: ++ added (green), ** changed (yellow), ~~ moved (purple), -- removed (red). Collapsed ... groups are authored summaries, not automatically verified file counts.</desc>
-  <rect width="100%" height="100%" rx="8" fill="var(--ct-fill)" />
-  <text x="21" y="46"><tspan fill="var(--ct-path)">.</tspan></text>
-  <text x="21" y="73"><tspan fill="var(--ct-muted)">└── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> a.ts</tspan></text>
-  <text x="21" y="113.5"><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-muted)"> added   </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-muted)"> changed   </tspan><tspan fill="var(--ct-moved)">~~</tspan><tspan fill="var(--ct-muted)"> moved   </tspan><tspan fill="var(--ct-removed)">--</tspan><tspan fill="var(--ct-muted)"> removed</tspan></text>
+  <text x="-1" y="23.799999999999997"><tspan fill="var(--ct-path)">.</tspan></text>
+  <text x="-1" y="43.519999999999996"><tspan fill="var(--ct-muted)">└── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> a.ts</tspan></text>
+  <text x="-1" y="73.1"><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-muted)"> added   </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-muted)"> changed   </tspan><tspan fill="var(--ct-moved)">~~</tspan><tspan fill="var(--ct-muted)"> moved   </tspan><tspan fill="var(--ct-removed)">--</tspan><tspan fill="var(--ct-muted)"> removed</tspan></text>
 </svg>
 
 .
@@ -45,7 +44,7 @@ All runs use this tree (via --text; also accepted on stdin or --file):
 [exit 0]
 
 === --no-fallback: pure SVG to stdout, single trailing newline (exit 0) — SVG body elided ===
-<svg xmlns="http://www.w3.org/2000/svg" width="161" height="146" role="img" aria-labelledby="ct-1kf7tfh-title ct-1kf7tfh-desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="368" height="87.03999999999999" role="img" aria-labelledby="ct-1kf7tfh-title ct-1kf7tfh-desc">
   (... SVG body ...)
 </svg>
 [exit 0] (stdout ends at </svg> + one newline, no fallback)
@@ -82,23 +81,41 @@ Cannot render tree: line too wide to render at the current maximum width.
 [exit 1]
 
 === unknown flag → usage to stderr (exit 1; first line) ===
-Usage: change-tree-svg [options]
+Usage: change-tree-svg [command] [options]
 [... full USAGE elided ...]
 
 === --help → usage to stdout (exit 0) ===
-Usage: change-tree-svg [options]
+Usage: change-tree-svg [command] [options]
+
+Commands:
+  render   render SVG (default)
+  slice    write strip SVGs to a directory
+  markup   print the GitHub <pre> embed block
+  upload   publish strips to the media branch
+  embed    slice, upload, and print the embed block
 
 Input (exactly one):
-  -t, --text <tree>   Change Tree notation as a string
-  -f, --file <path>   read Change Tree notation from a file
+  -t, --text <tree>     Change Tree notation as a string
+  -f, --file <path>     read Change Tree notation from a file
   (or pipe Change Tree notation on stdin)
 
 Output:
-  -o, --output <path> write SVG to a file instead of stdout
-  --no-fallback       omit the plain-text fallback
+  -o, --output <path>   write SVG to a file instead of stdout
+  --no-fallback         omit the plain-text fallback
+
+Slicing:
+  --strip-width <px>    strip width (default 240)
+  --height <px>         scale strips to this height
+  --out-dir <dir>       slice: directory to write strip files
+  --base-url <url>      markup: base URL for strip srcs
+
+Publishing:
+  --repo <owner/repo>   override detected GitHub repo
+  --branch <name>       media branch (default media)
 
 Other:
-  --no-legend         hide the legend in SVG and fallback
-  -h, --help          show this help
+  --container           render the standalone padded panel
+  --no-legend           hide the legend in SVG and fallback
+  -h, --help            show this help
 [exit 0]
 OK

@@ -48,7 +48,76 @@ Input:
 
 Rendered (scrollable — drag sideways):
 
-<pre><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p0.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p1.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p2.svg" alt=""></picture></pre>
+<pre><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/1ptnkv1/p0.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/1ptnkv1/p1.svg" alt=""></picture></pre>
+
+### Deeper example
+
+A larger tree: more depth, collapsed groups with counts, a moved entry, and one long
+line whose body and comment overflow past the shared comment column.
+
+Input:
+
+```text
+.
+├── src/
+│   ├── api/
+│   │   ├── routes/
+│   │   │   ├── ++ users.controller.ts        # CRUD for profiles, avatar upload, and soft-delete with audit trail
+│   │   │   ├── ** auth.controller.ts          # refresh-token rotation, device fingerprinting, step-up MFA on sensitive routes
+│   │   │   ├── ++ v2/analytics/ingest/events.controller.ts   # batched ingest with dedupe, exponential retry backoff, and per-tenant rate caps
+│   │   │   └── -- legacy-session.controller.ts
+│   │   ├── ++ middleware/rate-limit.ts        # token bucket per IP backed by a Redis sliding window
+│   │   └── ** server.ts                       # wire new routes and graceful shutdown hooks
+│   ├── domain/
+│   │   ├── ~~ user.entity.ts                  # moved from models/user.ts, now carries billing relations
+│   │   ├── ++ subscription.entity.ts          # billing states: trialing, active, past_due, canceled
+│   │   └── ** invoice.entity.ts               # add proration and credit-note line items
+│   ├── infra/
+│   │   ├── db/
+│   │   │   ├── ++ migrations/0007_add_subscriptions.sql
+│   │   │   └── ** connection-pool.ts          # raise max connections to 20 and add a health-check ping
+│   │   └── ... 4 cache adapters
+│   └── ... 12 barrel files
+├── test/
+│   ├── ++ subscription.e2e.spec.ts            # billing happy path plus dunning and proration edge cases
+│   └── ... 23 unit specs
+└── ** README.md                               # document billing setup and required environment variables
+```
+
+Rendered (scrollable — drag sideways):
+
+<pre><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/1g15q5j/p0.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/1g15q5j/p1.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/1g15q5j/p2.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/1g15q5j/p3.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/1g15q5j/p4.svg" alt=""></picture></pre>
+
+Plain-text fallback (`renderFallback`):
+
+```text
+.
+├── src/
+│   ├── api/
+│   │   ├── routes/
+│   │   │   ├── ++ users.controller.ts        # CRUD for profiles, avatar upload, and soft-delete with audit trail
+│   │   │   ├── ** auth.controller.ts          # refresh-token rotation, device fingerprinting, step-up MFA on sensitive routes
+│   │   │   ├── ++ v2/analytics/ingest/events.controller.ts   # batched ingest with dedupe, exponential retry backoff, and per-tenant rate caps
+│   │   │   └── -- legacy-session.controller.ts
+│   │   ├── ++ middleware/rate-limit.ts        # token bucket per IP backed by a Redis sliding window
+│   │   └── ** server.ts                       # wire new routes and graceful shutdown hooks
+│   ├── domain/
+│   │   ├── ~~ user.entity.ts                  # moved from models/user.ts, now carries billing relations
+│   │   ├── ++ subscription.entity.ts          # billing states: trialing, active, past_due, canceled
+│   │   └── ** invoice.entity.ts               # add proration and credit-note line items
+│   ├── infra/
+│   │   ├── db/
+│   │   │   ├── ++ migrations/0007_add_subscriptions.sql
+│   │   │   └── ** connection-pool.ts          # raise max connections to 20 and add a health-check ping
+│   │   └── ... 4 cache adapters
+│   └── ... 12 barrel files
+├── test/
+│   ├── ++ subscription.e2e.spec.ts            # billing happy path plus dunning and proration edge cases
+│   └── ... 23 unit specs
+└── ** README.md                               # document billing setup and required environment variables
+
+++ added   ** changed   ~~ moved   -- removed
+```
 
 ### What this is not
 

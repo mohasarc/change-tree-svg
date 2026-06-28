@@ -1,16 +1,7 @@
-// Generates example SVG artifacts for phase 4
-import { parseLines } from '../../dist/parse.js';
-import { measure } from '../../dist/layout.js';
-import { renderSvg, djb2 } from '../../dist/render.js';
+// Generates example SVG artifacts for phase 4 (bare, matching CLI default output)
+import { render } from '../../dist/index.js';
 import { writeFileSync } from 'node:fs';
 
-function render(input) {
-  const lines = parseLines(input);
-  const metrics = measure(lines, {});
-  return renderSvg(lines, metrics, djb2(input));
-}
-
-// Default example — realistic change tree
 const example = `.
 ├── src/
 │   ├── ++ render.ts
@@ -19,5 +10,19 @@ const example = `.
 │   └── -- legacy.ts
 └── ... 4 test files`;
 
-writeFileSync(new URL('./example.svg', import.meta.url), render(example));
-console.log('wrote example.svg');
+const cli = `.
+├── src/
+│   ├── ++ cli.ts # entry + routing
+│   └── ** index.ts
+└── ... 3 test files`;
+
+const jobs = [
+  ['example', example, {}],
+  ['cli-default', cli, {}],
+  ['cli-no-legend', cli, { legend: false }],
+];
+
+for (const [name, input, opts] of jobs) {
+  writeFileSync(new URL(`./${name}.svg`, import.meta.url), render(input, opts) + '\n');
+  console.log(`wrote ${name}.svg`);
+}
