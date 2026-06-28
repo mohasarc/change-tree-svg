@@ -8,6 +8,10 @@ export const LEGEND_GAP = LINE_HEIGHT;
 export const DEFAULT_MAX_LINE_WIDTH = 120;
 export const DEFAULT_STRIP_WIDTH = 240;
 
+export const COMMENT_GAP = 2;           // char-widths between column and comment
+export const COMMENT_OUTLIER_DELTA = 8; // chars past median before a body overflows
+export const ORIGIN_NUDGE = -1;         // px left shift in bare mode to cancel glyph side-bearing
+
 // GitHub Primer semantic tokens
 export const LIGHT = {
   containerFill: 'rgba(246,248,250,0.85)',
