@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { parseLines } from './parse.js';
 import { measure } from './layout.js';
-import { renderSvg, djb2 } from './render.js';
+import { renderSvg, renderInner, djb2 } from './render.js';
 
 function render(lines: string[]): string {
   const input = lines.join('\n');
@@ -102,5 +102,31 @@ describe('renderSvg', () => {
     const svg = renderSvg(parsed, metrics, djb2(input));
     expect(svg).not.toContain('<tspan fill="var(--ct-muted)"> added   </tspan>');
     expect(svg).toContain('var(--ct-added)');
+  });
+});
+
+describe('renderInner', () => {
+  function inner(lines: string[], options = {}): string {
+    const parsed = parseLines(lines.join('\n'));
+    return renderInner(parsed, measure(parsed, options));
+  }
+
+  it('contains the <style> block', () => {
+    expect(inner(['.'])).toContain('<style>');
+  });
+
+  it('emits one <text per line (legend off)', () => {
+    const lines = ['++ src/a.ts', '', '** src/b.ts'];
+    const parsed = parseLines(lines.join('\n'));
+    const svgInner = renderInner(parsed, measure(parsed, { legend: false }));
+    const count = (svgInner.match(/<text /g) ?? []).length;
+    expect(count).toBe(parsed.length);
+  });
+
+  it('contains no <svg, <rect, or <title wrapper', () => {
+    const svgInner = inner(['++ src/a.ts']);
+    expect(svgInner).not.toContain('<svg');
+    expect(svgInner).not.toContain('<rect');
+    expect(svgInner).not.toContain('<title');
   });
 });
