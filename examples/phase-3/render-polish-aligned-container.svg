@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="225.2" role="img" aria-labelledby="ct-6lt518-title ct-6lt518-desc">
+  <title id="ct-6lt518-title">Change Tree</title>
+  <desc id="ct-6lt518-desc">Colored Unicode repository tree showing where changes live in a diff. Status markers: ++ added (green), ** changed (yellow), ~~ moved (purple), -- removed (red). Collapsed ... groups are authored summaries, not automatically verified file counts.</desc>
+  <rect width="100%" height="100%" rx="8" fill="var(--ct-fill)" />
+  <style>
+    :root {
+      --ct-fill: rgba(246,248,250,0.85);
+      --ct-path: #24292f;
+      --ct-muted: #57606a;
+      --ct-added: #1a7f37;
+      --ct-changed: #9a6700;
+      --ct-moved: #8250df;
+      --ct-removed: #cf222e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ct-fill: rgba(22,27,34,0.85);
+        --ct-path: #e6edf3;
+        --ct-muted: #8b949e;
+        --ct-added: #3fb950;
+        --ct-changed: #d29922;
+        --ct-moved: #bc8cff;
+        --ct-removed: #f85149;
+      }
+    }
+    text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; font-size: 13.6px; }
+  </style>
+  <text x="16" y="33.72"><tspan fill="var(--ct-path)">.</tspan></text>
+  <text x="16" y="53.44"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> src/api/users.controller.ts</tspan><tspan fill="var(--ct-muted)" x="309.76"># new CRUD endpoints</tspan></text>
+  <text x="16" y="73.16"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> src/api/auth.controller.ts</tspan><tspan fill="var(--ct-muted)" x="309.76"># add refresh-token flow</tspan></text>
+  <text x="16" y="92.88"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> src/api/v2/analytics/events.controller.ts</tspan><tspan fill="var(--ct-muted)" x="424"># batched ingest with dedupe + retry backoff</tspan></text>
+  <text x="16" y="112.6"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> src/api/server.ts</tspan><tspan fill="var(--ct-muted)" x="309.76"># wire new routes</tspan></text>
+  <text x="16" y="132.32"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-moved)">~~</tspan><tspan fill="var(--ct-path)"> src/domain/user.entity.ts</tspan><tspan fill="var(--ct-muted)" x="309.76"># moved from models/user.ts</tspan></text>
+  <text x="16" y="152.04"><tspan fill="var(--ct-muted)">└── </tspan><tspan fill="var(--ct-removed)">--</tspan><tspan fill="var(--ct-path)"> src/api/legacy-session.controller.ts</tspan></text>
+  <text x="16" y="171.76"></text>
+  <text x="16" y="201.33999999999997"><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-muted)"> added   </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-muted)"> changed   </tspan><tspan fill="var(--ct-moved)">~~</tspan><tspan fill="var(--ct-muted)"> moved   </tspan><tspan fill="var(--ct-removed)">--</tspan><tspan fill="var(--ct-muted)"> removed</tspan></text>
+</svg>
