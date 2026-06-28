@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="541" viewBox="240 0 240 540.5999999999999"><style>
+    :root {
+      --ct-fill: rgba(246,248,250,0.85);
+      --ct-path: #24292f;
+      --ct-muted: #57606a;
+      --ct-added: #1a7f37;
+      --ct-changed: #9a6700;
+      --ct-moved: #8250df;
+      --ct-removed: #cf222e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ct-fill: rgba(22,27,34,0.85);
+        --ct-path: #e6edf3;
+        --ct-muted: #8b949e;
+        --ct-added: #3fb950;
+        --ct-changed: #d29922;
+        --ct-moved: #bc8cff;
+        --ct-removed: #f85149;
+      }
+    }
+    text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; font-size: 13.6px; }
+  </style>
+  <text x="-1" y="23.799999999999997"><tspan fill="var(--ct-path)">.</tspan></text>
+  <text x="-1" y="43.519999999999996"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-path)">src/</tspan></text>
+  <text x="-1" y="63.239999999999995"><tspan fill="var(--ct-muted)">│   ├── </tspan><tspan fill="var(--ct-path)">api/</tspan></text>
+  <text x="-1" y="82.96"><tspan fill="var(--ct-muted)">│   │   ├── </tspan><tspan fill="var(--ct-path)">routes/</tspan></text>
+  <text x="-1" y="102.67999999999999"><tspan fill="var(--ct-muted)">│   │   │   ├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> users.controller.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># CRUD for profiles, avatar upload, and soft-delete with audit trail</tspan></text>
+  <text x="-1" y="122.39999999999999"><tspan fill="var(--ct-muted)">│   │   │   ├── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> auth.controller.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># refresh-token rotation, device fingerprinting, step-up MFA on sensitive routes</tspan></text>
+  <text x="-1" y="142.12"><tspan fill="var(--ct-muted)">│   │   │   ├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> v2/analytics/ingest/events.controller.ts</tspan><tspan fill="var(--ct-muted)" x="488.6"># batched ingest with dedupe, exponential retry backoff, and per-tenant rate caps</tspan></text>
+  <text x="-1" y="161.84"><tspan fill="var(--ct-muted)">│   │   │   └── </tspan><tspan fill="var(--ct-removed)">--</tspan><tspan fill="var(--ct-path)"> legacy-session.controller.ts</tspan></text>
+  <text x="-1" y="181.56"><tspan fill="var(--ct-muted)">│   │   ├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> middleware/rate-limit.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># token bucket per IP backed by a Redis sliding window</tspan></text>
+  <text x="-1" y="201.28"><tspan fill="var(--ct-muted)">│   │   └── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> server.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># wire new routes and graceful shutdown hooks</tspan></text>
+  <text x="-1" y="221"><tspan fill="var(--ct-muted)">│   ├── </tspan><tspan fill="var(--ct-path)">domain/</tspan></text>
+  <text x="-1" y="240.72"><tspan fill="var(--ct-muted)">│   │   ├── </tspan><tspan fill="var(--ct-moved)">~~</tspan><tspan fill="var(--ct-path)"> user.entity.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># moved from models/user.ts, now carries billing relations</tspan></text>
+  <text x="-1" y="260.44"><tspan fill="var(--ct-muted)">│   │   ├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> subscription.entity.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># billing states: trialing, active, past_due, canceled</tspan></text>
+  <text x="-1" y="280.15999999999997"><tspan fill="var(--ct-muted)">│   │   └── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> invoice.entity.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># add proration and credit-note line items</tspan></text>
+  <text x="-1" y="299.87999999999994"><tspan fill="var(--ct-muted)">│   ├── </tspan><tspan fill="var(--ct-path)">infra/</tspan></text>
+  <text x="-1" y="319.59999999999997"><tspan fill="var(--ct-muted)">│   │   ├── </tspan><tspan fill="var(--ct-path)">db/</tspan></text>
+  <text x="-1" y="339.32"><tspan fill="var(--ct-muted)">│   │   │   ├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> migrations/0007_add_subscriptions.sql</tspan></text>
+  <text x="-1" y="359.03999999999996"><tspan fill="var(--ct-muted)">│   │   │   └── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> connection-pool.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># raise max connections to 20 and add a health-check ping</tspan></text>
+  <text x="-1" y="378.75999999999993"><tspan fill="var(--ct-muted)">│   │   └── </tspan><tspan fill="var(--ct-path)">... 4 cache adapters</tspan></text>
+  <text x="-1" y="398.47999999999996"><tspan fill="var(--ct-muted)">│   └── </tspan><tspan fill="var(--ct-path)">... 12 barrel files</tspan></text>
+  <text x="-1" y="418.2"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-path)">test/</tspan></text>
+  <text x="-1" y="437.91999999999996"><tspan fill="var(--ct-muted)">│   ├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> subscription.e2e.spec.ts</tspan><tspan fill="var(--ct-muted)" x="333.56"># billing happy path plus dunning and proration edge cases</tspan></text>
+  <text x="-1" y="457.63999999999993"><tspan fill="var(--ct-muted)">│   └── </tspan><tspan fill="var(--ct-path)">... 23 unit specs</tspan></text>
+  <text x="-1" y="477.35999999999996"><tspan fill="var(--ct-muted)">└── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> README.md</tspan><tspan fill="var(--ct-muted)" x="333.56"># document billing setup and required environment variables</tspan></text>
+  <text x="-1" y="497.08"></text>
+  <text x="-1" y="526.66"><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-muted)"> added   </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-muted)"> changed   </tspan><tspan fill="var(--ct-moved)">~~</tspan><tspan fill="var(--ct-muted)"> moved   </tspan><tspan fill="var(--ct-removed)">--</tspan><tspan fill="var(--ct-muted)"> removed</tspan></text></svg>
