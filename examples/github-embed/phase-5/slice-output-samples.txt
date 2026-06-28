@@ -1,0 +1,8 @@
+slice(input)            → 3 strips (canvasWidth 713 > stripWidth 240)
+  p0: width=240 height=173 viewBox="0 0 240 172.8"
+  p1: width=240 height=173 viewBox="240 0 240 172.8"
+  p2: width=233 height=173 viewBox="480 0 233 172.8"
+
+slice(input, {height})  → uniform scale, same viewBox window, smaller box
+slice(narrow)           → 1 strip
+Each strip: bare (no <rect>), carries <style>, inner content byte-identical.
