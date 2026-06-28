@@ -1,0 +1,4 @@
+.
+├── ++ src/cli/commands/slice.ts   # writes p0.svg…pN.svg
+├── ++ src/cli/commands/markup.ts  # prints the <pre> embed block
+└── ** src/cli/cli.ts              # subcommand dispatch

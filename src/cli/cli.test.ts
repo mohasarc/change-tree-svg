@@ -1,11 +1,13 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
-import { mkdtempSync, rmSync, readFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, readFileSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { runCli, type CliIO } from './cli.js';
 import { USAGE } from './cli-args.js';
+import { slice } from '../engine/slice.js';
 
 const TREE = '.\n└── ++ a.ts';
+const WIDE_TREE = '.\n└── ++ ' + 'a'.repeat(60) + '.ts';
 const LEGEND_LINE = '++ added   ** changed   ~~ moved   -- removed';
 
 function run(overrides: Partial<CliIO>) {
@@ -66,6 +68,11 @@ describe('runCli', () => {
     expect(out).toBe('');
   });
 
+  it('default render is bare, --container adds the panel rect', () => {
+    expect(run({ argv: ['--text', TREE] }).out).not.toContain('<rect');
+    expect(run({ argv: ['--text', TREE, '--container'] }).out).toContain('<rect');
+  });
+
   it('--no-legend drops legend from SVG and fallback', () => {
     const { code, out } = run({ argv: ['--text', TREE, '--no-legend'] });
     expect(code).toBe(0);
@@ -115,5 +122,52 @@ describe('runCli', () => {
     const { code, err } = run({ argv: ['--bogus'] });
     expect(code).toBe(1);
     expect(err).toContain(USAGE);
+  });
+
+  it('slice writes one strip file per slice and prints their names', () => {
+    const outDir = mkdtempSync(join(tmpdir(), 'slice-'));
+    const expected = slice(WIDE_TREE, {}).length;
+    const { code, out } = run({ argv: ['slice', '--text', WIDE_TREE, '--out-dir', outDir] });
+    expect(code).toBe(0);
+    expect(expected).toBeGreaterThan(1);
+    const files = readdirSync(outDir).filter((name) => name.endsWith('.svg')).sort();
+    expect(files.length).toBe(expected);
+    for (let i = 0; i < expected; i++) {
+      expect(files).toContain(`p${i}.svg`);
+      expect(readFileSync(join(outDir, `p${i}.svg`), 'utf8')).toMatch(/^<svg/);
+      expect(out).toContain(`p${i}.svg`);
+    }
+    rmSync(outDir, { recursive: true, force: true });
+  });
+
+  it('slice without --out-dir errors', () => {
+    const { code, err } = run({ argv: ['slice', '--text', WIDE_TREE] });
+    expect(code).toBe(1);
+    expect(err).toContain('--out-dir');
+  });
+
+  it('markup over a strip dir prints a <pre> of base-url srcs', () => {
+    const outDir = mkdtempSync(join(tmpdir(), 'markup-'));
+    run({ argv: ['slice', '--text', WIDE_TREE, '--out-dir', outDir] });
+    const count = slice(WIDE_TREE, {}).length;
+    const { code, out } = run({
+      argv: ['markup', '--out-dir', outDir, '--base-url', 'https://x/y'],
+    });
+    expect(code).toBe(0);
+    expect(out).toMatch(/^<pre>/);
+    expect(out).toContain('</pre>');
+    for (let i = 0; i < count; i++) {
+      expect(out).toContain(`src="https://x/y/p${i}.svg"`);
+    }
+    expect(out.match(/<picture>/g)?.length).toBe(count);
+    rmSync(outDir, { recursive: true, force: true });
+  });
+
+  it('markup without --base-url errors', () => {
+    const outDir = mkdtempSync(join(tmpdir(), 'markup-'));
+    const { code, err } = run({ argv: ['markup', '--out-dir', outDir] });
+    expect(code).toBe(1);
+    expect(err).toContain('--base-url');
+    rmSync(outDir, { recursive: true, force: true });
   });
 });
