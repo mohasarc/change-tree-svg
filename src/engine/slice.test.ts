@@ -33,8 +33,9 @@ describe('slice', () => {
   });
 
   it('tree narrower than stripWidth yields exactly one strip', () => {
-    expect(bareMetrics(narrow).canvasWidth).toBeLessThan(DEFAULT_STRIP_WIDTH);
-    expect(slice(narrow).length).toBe(1);
+    const parsed = parseLines(narrow);
+    expect(measure(parsed, { legend: false }).canvasWidth).toBeLessThan(DEFAULT_STRIP_WIDTH);
+    expect(slice(narrow, { legend: false }).length).toBe(1);
   });
 
   it('every strip starts with <svg, width <= stripWidth, identical height, carries <style>', () => {
@@ -68,6 +69,15 @@ describe('slice', () => {
 
   it('no <rect> in any strip', () => {
     for (const strip of slice(wide)) expect(strip).not.toContain('<rect');
+  });
+
+  it('strip viewBox widths sum to canvasWidth; last strip carries no trailing blank', () => {
+    const { canvasWidth } = bareMetrics(wide);
+    const strips = slice(wide);
+    const widths = strips.map((s) => Number(viewBox(s).split(' ')[2]));
+    expect(widths.reduce((a, b) => a + b, 0)).toBe(canvasWidth);
+    const last = widths[widths.length - 1];
+    expect(last).toBe(canvasWidth - (strips.length - 1) * DEFAULT_STRIP_WIDTH);
   });
 
   it('determinism — same input+options → identical array', () => {
