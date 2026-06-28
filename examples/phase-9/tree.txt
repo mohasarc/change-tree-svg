@@ -1,0 +1,4 @@
+.
+├── ++ src/cli/commands/upload.ts   # publish strips, print raw urls
+├── ++ src/cli/commands/embed.ts    # one-shot: slice → upload → <pre>
+└── ** src/cli/cli.ts               # dispatch upload/embed
