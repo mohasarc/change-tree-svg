@@ -1,0 +1,4 @@
+.
+└── ++ src/engine/render.ts # bare by default now
+    ├── ** measure() honors container
+    └── ** renderSvg() gates the <rect>
