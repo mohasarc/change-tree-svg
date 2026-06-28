@@ -159,6 +159,10 @@ Included in this version:
 - Produce an optional copyable text fallback matching the rendered tree.
 - Support light and dark viewing contexts.
 - Report invalid or unsupported input clearly.
+- Render a bare image by default and the container panel on request.
+- Slice the bare render into fixed-width vertical strips.
+- Publish strips to an orphan branch in the same GitHub repository.
+- Emit embed markup that GitHub renders as a horizontally scrollable strip set.
 
 Excluded from this version:
 
@@ -170,7 +174,6 @@ Excluded from this version:
 - Verifying the Change Tree against the actual diff.
 - Requiring a tree input file for the default path.
 - Requiring an SVG output file for the default path.
-- Uploading images to GitHub.
 - Editing PR descriptions.
 - Posting PR comments.
 - Generating PNG output.
@@ -430,6 +433,93 @@ Example fallback:
 
 ++ added   ** changed   ~~ moved   -- removed
 ```
+
+## GitHub Embed
+
+GitHub sanitizes inline raw SVG in PR and comment bodies, but renders `<img>`-hosted SVG at full vector fidelity. To embed a wide Change Tree, the package slices the render into fixed-width vertical strips, publishes them, and emits markup that GitHub renders as one horizontally scrollable strip set.
+
+### Bare vs Container Render
+
+The render has two forms.
+
+Functional rule:
+
+```text
+The default render is bare: no container background, no decorative padding, canvas tight to the content. The container render is an opt-in that restores the rounded translucent panel and padding.
+```
+
+Correct behavior:
+
+- The default render draws no container rectangle and adds no decorative padding. Its canvas is tight to the text, with only enough bottom inset to keep descenders inside the box.
+- The container render reproduces the standalone style: rounded 8 px corners, translucent fill, horizontal and vertical padding.
+- Both forms preserve the same tree text, markers, branch glyphs, and comments.
+
+The bare render is the form that gets sliced and embedded. The container render is for standalone use where the panel reads as a code block.
+
+### Slicing for GitHub Embed
+
+Slicing windows the bare render into vertical strips.
+
+Functional rule:
+
+```text
+Slicing splits the bare render into fixed-width vertical strips at one shared height. Strips placed side by side, in order, reconstruct the full tree with no gap and no overlap.
+```
+
+Correct behavior:
+
+- A tree wider than the strip width yields multiple strips; a tree that fits yields exactly one.
+- Every strip is a standalone SVG of identical height that shows its window of the tree.
+- Strip order is left to right. Concatenating the windows reproduces the full render.
+- Slicing is deterministic: same tree and options produce the same strips.
+
+Slicing does not change the rendered content. It only chooses which horizontal window each strip shows.
+
+### Publishing Strips (orphan `media` branch)
+
+Strips are hosted in the same repository on an orphan branch.
+
+Functional rule:
+
+```text
+Strip files are published to an orphan branch (default `media`) in the same GitHub repository, content-addressed by a hash of the strips, as one atomic commit per publish.
+```
+
+Correct behavior:
+
+- The first publish creates the `media` branch if it is absent.
+- Strips for one tree land under a content-addressed path, so re-publishing identical strips is idempotent — it reuses the existing files and writes nothing.
+- Publishing requires an authenticated `gh`. If `gh` is missing or unauthenticated, the package reports that the user must run `gh auth login`.
+
+Publishing uploads strip images to GitHub. It does not edit PR descriptions, post comments, or read the diff.
+
+### Embed Markup Contract
+
+The embed output is a single block GitHub can render.
+
+Functional rule:
+
+```text
+Embed markup is one `<pre>` block containing one `<picture><img></picture>` wrapper per strip URL, in order, with no whitespace between adjacent wrappers.
+```
+
+Correct behavior:
+
+- Each strip URL is wrapped in `<picture><img src=… alt=""></picture>`.
+- Wrappers are concatenated with no whitespace, inside one `<pre>`, so GitHub lays the strips out as one continuous horizontally scrollable row.
+- The `<picture>` wrapper keeps GitHub from turning each image into a separate linkified block.
+
+Failure behavior:
+
+- Empty strip input produces no markup; the package reports that there is nothing to embed.
+
+Embed limitation — light mode only:
+
+```text
+GitHub hosts the strips as <img>-referenced SVG, which cannot respond to prefers-color-scheme. The embed always uses the light-context palette. Dark-mode embeds are not possible through this path.
+```
+
+The container render and the copyable fallback text remain the dark-context backstops.
 
 ## Cross-Cutting Concerns
 

@@ -43,7 +43,8 @@ Write the failing test first, then make it pass. Every behavior the package perf
 - Reuse existing utilities before adding dependencies or new abstractions.
 - Keep behavior deterministic and non-interactive by default.
 - Keep scope narrow: authored Change Tree text in, SVG out.
-- Do not expand scope into git diff parsing, GitHub posting, automatic summary generation, or validation against real diffs unless the functional spec changes first.
+- CLI-driven strip upload is in scope: slicing the render, publishing strips to the repo's orphan `media` branch, and emitting embed markup.
+- Do not expand scope into git diff parsing, automatic summary generation, editing PR descriptions, posting PR comments, or validation against real diffs unless the functional spec changes first.
 - Update docs and examples whenever user-visible behavior changes.
 
 ## PR descriptions
