@@ -8,13 +8,19 @@ const hash = contentHash(strips);
 const files = stripFiles(strips, hash);
 const target = { slug: { owner: 'o', repo: 'r' }, branch: 'media' };
 
+const METHODS = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'];
+
 function methodOf(args: string[]): string {
   const i = args.indexOf('-X');
   return i >= 0 ? args[i + 1] : 'GET';
 }
 
+function endpointOf(args: string[]): string {
+  return args.find((arg, i) => i > 0 && !arg.startsWith('-') && !METHODS.includes(arg)) ?? '';
+}
+
 function label(args: string[]): string {
-  const endpoint = args[1];
+  const endpoint = endpointOf(args);
   const method = methodOf(args);
   if (endpoint === 'repos/o/r/git/ref/heads/media' && method === 'GET') return 'ensure';
   if (endpoint === 'repos/o/r/git/refs' && method === 'POST') return 'create-ref';
@@ -42,7 +48,7 @@ function makeRunner({ authed = true, branchExists = true, pathExists = false }: 
       if (!authed) throw new Error('gh: not logged in');
       return '';
     }
-    const endpoint = args[1];
+    const endpoint = endpointOf(args);
     const method = methodOf(args);
     if (endpoint === 'repos/o/r/git/ref/heads/media') {
       if (!branchExists) throw new Error('404 Not Found');
