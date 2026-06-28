@@ -1,9 +1,9 @@
-export const FONT_SIZE = 18;
-export const CHAR_WIDTH = 0.6 * FONT_SIZE;    // 10.8
-export const LINE_HEIGHT = FONT_SIZE * 1.5;   // 27
-export const H_PADDING = 21;
-export const V_PADDING = 19;
-export const DESCENT_ALLOWANCE = 0.3 * FONT_SIZE;   // 5.4 — bare bottom inset for descenders
+export const FONT_SIZE = 13.6;                       // GitHub markdown fenced code block (85% of 16px)
+export const CHAR_WIDTH = 0.6 * FONT_SIZE;           // 8.16
+export const LINE_HEIGHT = 1.45 * FONT_SIZE;         // 19.72
+export const H_PADDING = Math.round(1.2 * FONT_SIZE);   // 16
+export const V_PADDING = Math.round(1.05 * FONT_SIZE);  // 14
+export const DESCENT_ALLOWANCE = 0.3 * FONT_SIZE;    // bare bottom inset for descenders
 export const LEGEND_GAP = LINE_HEIGHT;
 export const DEFAULT_MAX_LINE_WIDTH = 120;
 export const DEFAULT_STRIP_WIDTH = 240;
