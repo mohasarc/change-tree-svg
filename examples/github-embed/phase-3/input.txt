@@ -1,0 +1,3 @@
+.
+└── ++ src/engine/render.ts # split out renderInner
+    └── ** renderSvg now composes it

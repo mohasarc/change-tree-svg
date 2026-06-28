@@ -93,10 +93,8 @@ const DESC_TEXT =
   'Status markers: ++ added (green), ** changed (yellow), ~~ moved (purple), -- removed (red). ' +
   'Collapsed ... groups are authored summaries, not automatically verified file counts.';
 
-export function renderSvg(lines: ParsedLine[], metrics: LayoutMetrics, inputHash: string): string {
-  const { canvasWidth, canvasHeight, hPadding, vPadding, lineHeight } = metrics;
-  const titleId = `ct-${inputHash}-title`;
-  const descId = `ct-${inputHash}-desc`;
+export function renderInner(lines: ParsedLine[], metrics: LayoutMetrics): string {
+  const { hPadding, vPadding, lineHeight } = metrics;
   const legendY = vPadding + (lines.length + 1.5) * lineHeight;
 
   const treeLines = lines
@@ -105,11 +103,19 @@ export function renderSvg(lines: ParsedLine[], metrics: LayoutMetrics, inputHash
 
   const legend = metrics.legend ? `\n${legendText(hPadding, legendY)}` : '';
 
+  return `${buildStyle()}
+${treeLines}${legend}`;
+}
+
+export function renderSvg(lines: ParsedLine[], metrics: LayoutMetrics, inputHash: string): string {
+  const { canvasWidth, canvasHeight } = metrics;
+  const titleId = `ct-${inputHash}-title`;
+  const descId = `ct-${inputHash}-desc`;
+
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasHeight}" role="img" aria-labelledby="${titleId} ${descId}">
-  ${buildStyle()}
   <title id="${titleId}">Change Tree</title>
   <desc id="${descId}">${DESC_TEXT}</desc>
   <rect width="100%" height="100%" rx="8" fill="var(--ct-fill)" />
-${treeLines}${legend}
+  ${renderInner(lines, metrics)}
 </svg>`;
 }
