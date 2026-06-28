@@ -1,0 +1,4 @@
+.
+└── ++ src/engine/slice.ts # window bare render into strips
+    ├── ** index.ts re-exports slice + SliceOptions
+    └── ++ src/engine/slice.test.ts # counts, viewBox, determinism
