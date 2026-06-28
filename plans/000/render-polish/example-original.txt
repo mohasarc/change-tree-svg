@@ -1,0 +1,7 @@
+.
+├── src/
+│   ├── ++ render.ts          # new SVG renderer
+│   ├── ** parse.ts           # fix marker regex
+│   ├── ~~ layout.ts          # moved from lib/layout.ts
+│   └── -- legacy-draw.ts
+└── ... 6 test files

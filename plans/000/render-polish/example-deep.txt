@@ -1,0 +1,24 @@
+.
+├── src/
+│   ├── api/
+│   │   ├── routes/
+│   │   │   ├── ++ users.controller.ts   # new CRUD endpoints
+│   │   │   ├── ** auth.controller.ts     # add refresh-token flow
+│   │   │   ├── ++ v2/analytics/events.controller.ts   # batched ingest with dedupe + retry backoff
+│   │   │   └── -- legacy-session.controller.ts
+│   │   ├── ++ middleware/rate-limit.ts   # token bucket per IP
+│   │   └── ** server.ts                  # wire new routes
+│   ├── domain/
+│   │   ├── ~~ user.entity.ts             # moved from models/user.ts
+│   │   ├── ++ subscription.entity.ts     # billing states
+│   │   └── ** invoice.entity.ts          # add proration
+│   ├── infra/
+│   │   ├── db/
+│   │   │   ├── ++ migrations/0007_add_subscriptions.sql
+│   │   │   └── ** connection-pool.ts     # raise max to 20
+│   │   └── ... 4 cache adapters
+│   └── ... 12 barrel files
+├── test/
+│   ├── ++ subscription.e2e.spec.ts       # billing happy path
+│   └── ... 23 unit specs
+└── ** README.md                          # document billing setup

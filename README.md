@@ -48,7 +48,76 @@ Input:
 
 Rendered (scrollable — drag sideways):
 
-<pre><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p0.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p1.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p2.svg" alt=""></picture></pre>
+<pre><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mnp2g5/p0.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mnp2g5/p1.svg" alt=""></picture></pre>
+
+### Deeper example
+
+A larger tree: more depth, collapsed groups with counts, a moved entry, and one long
+line whose body and comment overflow past the shared comment column.
+
+Input:
+
+```text
+.
+├── src/
+│   ├── api/
+│   │   ├── routes/
+│   │   │   ├── ++ users.controller.ts   # new CRUD endpoints
+│   │   │   ├── ** auth.controller.ts     # add refresh-token flow
+│   │   │   ├── ++ v2/analytics/events.controller.ts   # batched ingest with dedupe + retry backoff
+│   │   │   └── -- legacy-session.controller.ts
+│   │   ├── ++ middleware/rate-limit.ts   # token bucket per IP
+│   │   └── ** server.ts                  # wire new routes
+│   ├── domain/
+│   │   ├── ~~ user.entity.ts             # moved from models/user.ts
+│   │   ├── ++ subscription.entity.ts     # billing states
+│   │   └── ** invoice.entity.ts          # add proration
+│   ├── infra/
+│   │   ├── db/
+│   │   │   ├── ++ migrations/0007_add_subscriptions.sql
+│   │   │   └── ** connection-pool.ts     # raise max to 20
+│   │   └── ... 4 cache adapters
+│   └── ... 12 barrel files
+├── test/
+│   ├── ++ subscription.e2e.spec.ts       # billing happy path
+│   └── ... 23 unit specs
+└── ** README.md                          # document billing setup
+```
+
+Rendered (scrollable — drag sideways):
+
+<pre><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/3p46wk/p0.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/3p46wk/p1.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/3p46wk/p2.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/3p46wk/p3.svg" alt=""></picture></pre>
+
+Plain-text fallback (`renderFallback`):
+
+```text
+.
+├── src/
+│   ├── api/
+│   │   ├── routes/
+│   │   │   ├── ++ users.controller.ts   # new CRUD endpoints
+│   │   │   ├── ** auth.controller.ts     # add refresh-token flow
+│   │   │   ├── ++ v2/analytics/events.controller.ts   # batched ingest with dedupe + retry backoff
+│   │   │   └── -- legacy-session.controller.ts
+│   │   ├── ++ middleware/rate-limit.ts   # token bucket per IP
+│   │   └── ** server.ts                  # wire new routes
+│   ├── domain/
+│   │   ├── ~~ user.entity.ts             # moved from models/user.ts
+│   │   ├── ++ subscription.entity.ts     # billing states
+│   │   └── ** invoice.entity.ts          # add proration
+│   ├── infra/
+│   │   ├── db/
+│   │   │   ├── ++ migrations/0007_add_subscriptions.sql
+│   │   │   └── ** connection-pool.ts     # raise max to 20
+│   │   └── ... 4 cache adapters
+│   └── ... 12 barrel files
+├── test/
+│   ├── ++ subscription.e2e.spec.ts       # billing happy path
+│   └── ... 23 unit specs
+└── ** README.md                          # document billing setup
+
+++ added   ** changed   ~~ moved   -- removed
+```
 
 ### What this is not
 
