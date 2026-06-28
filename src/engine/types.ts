@@ -14,6 +14,11 @@ export interface RenderOptions {
   container?: boolean;
 }
 
+export interface SliceOptions {
+  stripWidth?: number;
+  height?: number;
+}
+
 export interface LayoutMetrics {
   lineHeight: number;
   charWidth: number;
