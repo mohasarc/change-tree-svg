@@ -1,5 +1,5 @@
 import type { ParsedLine, LayoutMetrics, Marker } from './types.js';
-import { COMMENT_GAP, FONT_SIZE, LIGHT, DARK } from './palette.js';
+import { COMMENT_OVERFLOW_GAP, FONT_SIZE, LIGHT, DARK } from './palette.js';
 import { commentStartChars } from './geometry.js';
 import { LEGEND_ENTRIES } from './legend.js';
 
@@ -74,13 +74,17 @@ function treeLineText(
     parts.push(`<tspan fill="var(--ct-${cssVar})">${esc(line.marker)}</tspan>`);
     parts.push(`<tspan fill="var(--ct-path)"> ${esc(line.body)}</tspan>`);
     if (line.comment !== null && columnChars !== null) {
-      const commentX = x + commentStartChars(line, columnChars, COMMENT_GAP) * charWidth;
+      const commentX = x + commentStartChars(line, columnChars, COMMENT_OVERFLOW_GAP) * charWidth;
       parts.push(`<tspan fill="var(--ct-muted)" x="${commentX}">${esc(line.comment)}</tspan>`);
     }
     return `  <text ${pos}>${parts.join('')}</text>`;
   }
 
-  return `  <text ${pos}><tspan fill="var(--ct-path)">${esc(line.body)}</tspan></text>`;
+  const [, connector, name] = /^([ \t│├└─]*)([\s\S]*)$/.exec(line.body) as RegExpExecArray;
+  const segments: string[] = [];
+  if (connector) segments.push(`<tspan fill="var(--ct-muted)">${esc(connector)}</tspan>`);
+  segments.push(`<tspan fill="var(--ct-path)">${esc(name)}</tspan>`);
+  return `  <text ${pos}>${segments.join('')}</text>`;
 }
 
 function legendText(x: number, y: number): string {

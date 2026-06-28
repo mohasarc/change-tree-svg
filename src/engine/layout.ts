@@ -5,6 +5,7 @@ import {
   CHAR_WIDTH,
   COMMENT_GAP,
   COMMENT_OUTLIER_DELTA,
+  COMMENT_OVERFLOW_GAP,
   DEFAULT_MAX_LINE_WIDTH,
   DESCENT_ALLOWANCE,
   H_PADDING,
@@ -32,7 +33,7 @@ export function measure(lines: ParsedLine[], options: RenderOptions): LayoutMetr
 
   const columnChars = commentColumnChars(nonEmpty, COMMENT_OUTLIER_DELTA, COMMENT_GAP);
   const widthChars = Math.max(
-    ...nonEmpty.map((l) => lineEndChars(l, columnChars, COMMENT_GAP)),
+    ...nonEmpty.map((l) => lineEndChars(l, columnChars, COMMENT_OVERFLOW_GAP)),
     legend ? legendLengthChars() : 0,
   );
   const canvasWidth = Math.ceil(widthChars * CHAR_WIDTH + (container ? 2 * H_PADDING : 0));

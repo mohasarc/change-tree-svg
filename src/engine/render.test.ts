@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { parseLines } from './parse.js';
 import { measure } from './layout.js';
 import { renderSvg, renderInner, djb2 } from './render.js';
-import { H_PADDING } from './palette.js';
+import { CHAR_WIDTH, COMMENT_OVERFLOW_GAP, H_PADDING, ORIGIN_NUDGE } from './palette.js';
+import { bodyEndChars } from './geometry.js';
 import type { RenderOptions } from './types.js';
 
 function render(lines: string[], options: RenderOptions = {}): string {
@@ -69,6 +70,22 @@ describe('renderSvg', () => {
   it('branch glyph prefix → prefix tspan uses --ct-muted', () => {
     const svg = render(['└── ++ src/render.ts']);
     expect(svg).toContain('<tspan fill="var(--ct-muted)">└── </tspan>');
+  });
+
+  it('non-marker line → connector glyphs use --ct-muted, name uses --ct-path', () => {
+    const svg = render(['│   └── src/']);
+    expect(svg).toContain('<tspan fill="var(--ct-muted)">│   └── </tspan>');
+    expect(svg).toContain('<tspan fill="var(--ct-path)">src/</tspan>');
+  });
+
+  it('outlier comment sits one char past its body, tighter than the column gap', () => {
+    const svg = render(['++ a.ts # one', '** bb.ts # two', '++ a/much/longer/body.ts # far']);
+    const xs = [...svg.matchAll(/<tspan fill="var\(--ct-muted\)" x="([\d.-]+)">#/g)].map((m) =>
+      Number(m[1]),
+    );
+    const parsed = parseLines('++ a/much/longer/body.ts # far');
+    const bodyEnd = bodyEndChars(parsed[0]!);
+    expect(xs[2]).toBeCloseTo(ORIGIN_NUDGE + (bodyEnd + COMMENT_OVERFLOW_GAP) * CHAR_WIDTH, 5);
   });
 
   it('legend line appears in output', () => {

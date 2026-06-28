@@ -21,13 +21,14 @@ Comment tspan x values in the rendered SVG:
 ```
 ct-muted)" x="292.76"   # users.controller   (aligned)
 ct-muted)" x="292.76"   # auth.controller    (aligned)
-ct-muted)" x="407"      # events.controller  (overflow, long body)
+ct-muted)" x="398.84"   # events.controller  (overflow, long body)
 ct-muted)" x="292.76"   # server.ts          (aligned)
 ct-muted)" x="292.76"   # user.entity        (aligned)
 ```
 
 Four comments land on the shared column (x=292.76). The long `events.controller.ts`
-body overflows past it (x=407). `legacy-session.controller.ts` has no comment, no tspan.
+body overflows past it (x=398.84), one char past its body — tighter than the column gap.
+`legacy-session.controller.ts` has no comment, no tspan.
 
 ## Width hugs rendered text (point-3 overshoot removed)
 

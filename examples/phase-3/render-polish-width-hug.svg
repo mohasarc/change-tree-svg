@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="245" height="106.75999999999999" role="img" aria-labelledby="ct-7a055-title ct-7a055-desc">
-  <title id="ct-7a055-title">Change Tree</title>
-  <desc id="ct-7a055-desc">Colored Unicode repository tree showing where changes live in a diff. Status markers: ++ added (green), ** changed (yellow), ~~ moved (purple), -- removed (red). Collapsed ... groups are authored summaries, not automatically verified file counts.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="245" height="87.03999999999999" role="img" aria-labelledby="ct-3rirn3-title ct-3rirn3-desc">
+  <title id="ct-3rirn3-title">Change Tree</title>
+  <desc id="ct-3rirn3-desc">Colored Unicode repository tree showing where changes live in a diff. Status markers: ++ added (green), ** changed (yellow), ~~ moved (purple), -- removed (red). Collapsed ... groups are authored summaries, not automatically verified file counts.</desc>
   <style>
     :root {
       --ct-fill: rgba(246,248,250,0.85);
@@ -28,5 +28,4 @@
   <text x="-1" y="43.519999999999996"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> src/a.ts</tspan><tspan fill="var(--ct-muted)" x="137.72"># add adapter</tspan></text>
   <text x="-1" y="63.239999999999995"><tspan fill="var(--ct-muted)">├── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> src/b.ts</tspan><tspan fill="var(--ct-muted)" x="137.72"># tweak</tspan></text>
   <text x="-1" y="82.96"><tspan fill="var(--ct-muted)">└── </tspan><tspan fill="var(--ct-removed)">--</tspan><tspan fill="var(--ct-path)"> src/c.ts</tspan><tspan fill="var(--ct-muted)" x="137.72"># drop</tspan></text>
-  <text x="-1" y="102.67999999999999"></text>
 </svg>

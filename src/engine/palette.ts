@@ -9,6 +9,7 @@ export const DEFAULT_MAX_LINE_WIDTH = 120;
 export const DEFAULT_STRIP_WIDTH = 240;
 
 export const COMMENT_GAP = 2;           // char-widths between column and comment
+export const COMMENT_OVERFLOW_GAP = 1;  // tighter gap for an outlier body past the column
 export const COMMENT_OUTLIER_DELTA = 8; // chars past median before a body overflows
 export const ORIGIN_NUDGE = -1;         // px left shift in bare mode to cancel glyph side-bearing
 
