@@ -2,20 +2,14 @@ import type { ParsedLine, LayoutMetrics, Marker } from './types.js';
 import { FONT_SIZE, LIGHT, DARK } from './palette.js';
 import { LEGEND_ENTRIES } from './legend.js';
 
+export { djb2 } from './hash.js';
+
 const MARKER_CSS_VAR: Record<Marker, string> = {
   '++': 'added',
   '**': 'changed',
   '~~': 'moved',
   '--': 'removed',
 };
-
-export function djb2(input: string): string {
-  let h = 5381;
-  for (let i = 0; i < input.length; i++) {
-    h = (((h << 5) + h) + input.charCodeAt(i)) >>> 0;
-  }
-  return h.toString(36);
-}
 
 function esc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
