@@ -1,5 +1,6 @@
 import type { ParsedLine, LayoutMetrics, Marker } from './types.js';
-import { FONT_SIZE, LIGHT, DARK } from './palette.js';
+import { COMMENT_GAP, FONT_SIZE, LIGHT, DARK } from './palette.js';
+import { commentStartChars } from './geometry.js';
 import { LEGEND_ENTRIES } from './legend.js';
 
 export { djb2 } from './hash.js';
@@ -51,7 +52,13 @@ ${cssProps(DARK, '        ')}
   </style>`;
 }
 
-function treeLineText(line: ParsedLine, x: number, y: number): string {
+function treeLineText(
+  line: ParsedLine,
+  x: number,
+  y: number,
+  columnChars: number | null,
+  charWidth: number,
+): string {
   const pos = `x="${x}" y="${y}"`;
 
   if (line.raw.trimEnd() === '') {
@@ -66,8 +73,9 @@ function treeLineText(line: ParsedLine, x: number, y: number): string {
     }
     parts.push(`<tspan fill="var(--ct-${cssVar})">${esc(line.marker)}</tspan>`);
     parts.push(`<tspan fill="var(--ct-path)"> ${esc(line.body)}</tspan>`);
-    if (line.comment !== null) {
-      parts.push(`<tspan fill="var(--ct-muted)"> ${esc(line.comment)}</tspan>`);
+    if (line.comment !== null && columnChars !== null) {
+      const commentX = x + commentStartChars(line, columnChars, COMMENT_GAP) * charWidth;
+      parts.push(`<tspan fill="var(--ct-muted)" x="${commentX}">${esc(line.comment)}</tspan>`);
     }
     return `  <text ${pos}>${parts.join('')}</text>`;
   }
@@ -94,11 +102,13 @@ const DESC_TEXT =
   'Collapsed ... groups are authored summaries, not automatically verified file counts.';
 
 export function renderInner(lines: ParsedLine[], metrics: LayoutMetrics): string {
-  const { hPadding, vPadding, lineHeight } = metrics;
+  const { hPadding, vPadding, lineHeight, charWidth, commentColumnChars } = metrics;
   const legendY = vPadding + (lines.length + 1.5) * lineHeight;
 
   const treeLines = lines
-    .map((line, i) => treeLineText(line, hPadding, vPadding + (i + 1) * lineHeight))
+    .map((line, i) =>
+      treeLineText(line, hPadding, vPadding + (i + 1) * lineHeight, commentColumnChars, charWidth),
+    )
     .join('\n');
 
   const legend = metrics.legend ? `\n${legendText(hPadding, legendY)}` : '';

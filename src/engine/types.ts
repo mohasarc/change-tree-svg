@@ -29,4 +29,5 @@ export interface LayoutMetrics {
   legendGap: number;
   legend: boolean;
   container: boolean;
+  commentColumnChars: number | null;
 }
