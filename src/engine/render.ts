@@ -59,7 +59,7 @@ function treeLineText(
   columnChars: number | null,
   charWidth: number,
 ): string {
-  const pos = `x="${x}" y="${y}"`;
+  const pos = `x="${x}" y="${y}" xml:space="preserve"`;
 
   if (line.raw.trimEnd() === '') {
     return `  <text ${pos}></text>`;

@@ -78,6 +78,12 @@ describe('renderSvg', () => {
     expect(svg).toContain('<tspan fill="var(--ct-path)">src/</tspan>');
   });
 
+  it('text elements preserve authored indentation spaces', () => {
+    const svg = render(['    └── src/', '        └── ++ index.ts']);
+    expect(svg).toContain('<text x="-1" y="23.799999999999997" xml:space="preserve">');
+    expect(svg).toContain('<text x="-1" y="43.519999999999996" xml:space="preserve">');
+  });
+
   it('outlier comment sits one char past its body, tighter than the column gap', () => {
     const svg = render(['++ a.ts # one', '** bb.ts # two', '++ a/much/longer/body.ts # far']);
     const xs = [...svg.matchAll(/<tspan fill="var\(--ct-muted\)" x="([\d.-]+)">#/g)].map((m) =>
