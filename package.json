@@ -1,12 +1,23 @@
 {
   "name": "change-tree-svg",
   "version": "0.1.0",
+  "description": "Render authored Change Tree notation as a colorful SVG for PR descriptions.",
+  "license": "MIT",
+  "author": "Mohammed S. Yaseen <moha.98.1900@gmail.com>",
+  "repository": { "type": "git", "url": "git+https://github.com/mohasarc/change-tree-svg.git" },
+  "homepage": "https://github.com/mohasarc/change-tree-svg#readme",
+  "bugs": "https://github.com/mohasarc/change-tree-svg/issues",
+  "keywords": ["change-tree", "svg", "pr", "code-review", "diagram"],
   "type": "module",
+  "engines": { "node": ">=20" },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
   "bin": {
     "change-tree-svg": "dist/cli/cli.js"
   },
+  "files": ["dist"],
+  "publishConfig": { "access": "public" },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "prepack": "npm run build",
