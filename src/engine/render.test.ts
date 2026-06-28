@@ -2,11 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { parseLines } from './parse.js';
 import { measure } from './layout.js';
 import { renderSvg, renderInner, djb2 } from './render.js';
+import { H_PADDING } from './palette.js';
+import type { RenderOptions } from './types.js';
 
-function render(lines: string[]): string {
+function render(lines: string[], options: RenderOptions = {}): string {
   const input = lines.join('\n');
   const parsed = parseLines(input);
-  const metrics = measure(parsed, {});
+  const metrics = measure(parsed, options);
   return renderSvg(parsed, metrics, djb2(input));
 }
 
@@ -93,6 +95,25 @@ describe('renderSvg', () => {
   it('same input → identical output (determinism)', () => {
     const lines = ['++ src/foo.ts', '** src/bar.ts # changed'];
     expect(render(lines)).toBe(render(lines));
+  });
+
+  it('default render omits the <rect background', () => {
+    expect(render(['++ src/a.ts'])).not.toContain('<rect');
+  });
+
+  it('container:true draws the <rect panel with --ct-fill and rx="8"', () => {
+    const svg = render(['++ src/a.ts'], { container: true });
+    expect(svg).toContain('<rect');
+    expect(svg).toContain('var(--ct-fill)');
+    expect(svg).toContain('rx="8"');
+  });
+
+  it('default text starts at content origin x="0"', () => {
+    expect(render(['++ src/a.ts'])).toContain('<text x="0"');
+  });
+
+  it('container:true insets text by H_PADDING', () => {
+    expect(render(['++ src/a.ts'], { container: true })).toContain(`<text x="${H_PADDING}"`);
   });
 
   it('metrics.legend === false → no "++ added" legend text in output', () => {
