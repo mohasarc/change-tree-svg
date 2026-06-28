@@ -68,6 +68,11 @@ describe('runCli', () => {
     expect(out).toBe('');
   });
 
+  it('default render is bare, --container adds the panel rect', () => {
+    expect(run({ argv: ['--text', TREE] }).out).not.toContain('<rect');
+    expect(run({ argv: ['--text', TREE, '--container'] }).out).toContain('<rect');
+  });
+
   it('--no-legend drops legend from SVG and fallback', () => {
     const { code, out } = run({ argv: ['--text', TREE, '--no-legend'] });
     expect(code).toBe(0);

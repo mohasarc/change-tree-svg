@@ -8,7 +8,7 @@ import { renderFallback } from '../../engine/fallback.js';
 export function renderCommand(io: CliIO, options: CliOptions): number {
   const stdin = io.stdin !== null && io.stdin.trim() !== '' ? io.stdin : null;
   const tree = resolveTreeText({ text: options.text, file: options.file, stdin });
-  const svg = render(tree, { legend: options.legend });
+  const svg = render(tree, { legend: options.legend, container: options.container });
   const fallback = options.fallback ? renderFallback(tree, { legend: options.legend }) : null;
 
   if (options.output !== null) {
