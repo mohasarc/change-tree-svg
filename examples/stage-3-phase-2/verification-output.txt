@@ -1,0 +1,16 @@
+# Phase 2 — packaged-install verification output
+
+$ node examples/stage-3-phase-2/verify-packaged-install.mjs
+PASS (a) public API renders
+PASS (b) installed bin runs
+PASS (c) deep import blocked
+PASS (d) no test files shipped
+
+All assertions passed.
+
+Exit code 0. Each assertion runs against the real packed tarball installed into
+a throwaway directory:
+  (a) ESM import of render / renderFallback / RenderError from the installed package
+  (b) the installed `change-tree-svg` bin emits SVG + fallback to stdout, exit 0
+  (c) `import('change-tree-svg/dist/engine/render.js')` rejects ERR_PACKAGE_PATH_NOT_EXPORTED
+  (d) `npm pack --dry-run --json` file list contains no *.test.* entry
