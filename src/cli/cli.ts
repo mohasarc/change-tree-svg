@@ -5,6 +5,8 @@ import { parseArgs, USAGE, type CliOptions } from './cli-args.js';
 import { CliError } from './cli-error.js';
 import { RenderError } from '../engine/error.js';
 import { renderCommand } from './commands/render.js';
+import { sliceCommand } from './commands/slice.js';
+import { markupCommand } from './commands/markup.js';
 
 export interface CliIO {
   argv: string[];
@@ -28,13 +30,24 @@ export function runCli(io: CliIO): number {
   }
 
   try {
-    return renderCommand(io, options);
+    return dispatch(io, options);
   } catch (err) {
     if (err instanceof CliError || err instanceof RenderError) {
       io.stderr(`${err.message}\n`);
       return 1;
     }
     throw err;
+  }
+}
+
+function dispatch(io: CliIO, options: CliOptions): number {
+  switch (options.command) {
+    case 'slice':
+      return sliceCommand(io, options);
+    case 'markup':
+      return markupCommand(io, options);
+    default:
+      return renderCommand(io, options);
   }
 }
 

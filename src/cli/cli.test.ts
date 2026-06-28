@@ -7,7 +7,7 @@ import { USAGE } from './cli-args.js';
 import { slice } from '../engine/slice.js';
 
 const TREE = '.\n└── ++ a.ts';
-const WIDE_TREE = '.\n└── ++ ' + 'a'.repeat(120) + '.ts';
+const WIDE_TREE = '.\n└── ++ ' + 'a'.repeat(60) + '.ts';
 const LEGEND_LINE = '++ added   ** changed   ~~ moved   -- removed';
 
 function run(overrides: Partial<CliIO>) {
