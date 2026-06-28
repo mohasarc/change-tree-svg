@@ -73,7 +73,7 @@ describe('measure', () => {
   });
 
   it('throws RenderError containing "too wide" when a line exceeds maxLineWidth', () => {
-    const longLine = 'a'.repeat(121);
+    const longLine = 'a'.repeat(DEFAULT_MAX_LINE_WIDTH + 1);
     const lines = ['src/', longLine].map(makeLine);
     expect(() => measure(lines, {})).toThrow('too wide');
   });
