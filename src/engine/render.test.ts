@@ -61,9 +61,9 @@ describe('renderSvg', () => {
     expect(render(['-- src/removed.ts'])).toContain('var(--ct-removed)');
   });
 
-  it('comment → --ct-muted tspan wraps the comment text', () => {
+  it('comment → positioned --ct-muted tspan, no leading space', () => {
     const svg = render(['++ src/foo.ts # added file']);
-    expect(svg).toContain('<tspan fill="var(--ct-muted)"> # added file</tspan>');
+    expect(svg).toMatch(/<tspan fill="var\(--ct-muted\)" x="[\d.-]+">#\sadded file<\/tspan>/);
   });
 
   it('branch glyph prefix → prefix tspan uses --ct-muted', () => {
@@ -108,8 +108,23 @@ describe('renderSvg', () => {
     expect(svg).toContain('rx="8"');
   });
 
-  it('default text starts at content origin x="0"', () => {
-    expect(render(['++ src/a.ts'])).toContain('<text x="0"');
+  it('default text origin shifts left by ORIGIN_NUDGE to x="-1"', () => {
+    expect(render(['++ src/a.ts'])).toContain('<text x="-1"');
+  });
+
+  it('aligned comments share one x; a long body overflows past it', () => {
+    const svg = render([
+      '++ a.ts # one',
+      '** bb.ts # two',
+      '-- ccc.ts # three',
+      '++ this/is/a/much/longer/body/file.ts # four',
+    ]);
+    const xs = [...svg.matchAll(/<tspan fill="var\(--ct-muted\)" x="([\d.-]+)">/g)].map((m) =>
+      Number(m[1]),
+    );
+    expect(xs.length).toBe(4);
+    expect(new Set(xs.slice(0, 3)).size).toBe(1);
+    expect(xs[3]).toBeGreaterThan(xs[0]);
   });
 
   it('container:true insets text by H_PADDING', () => {

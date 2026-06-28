@@ -47,7 +47,7 @@ describe('render() — muting', () => {
 
   it('comments appear in --ct-muted tspan', () => {
     const svg = render('** src/file.ts # a comment');
-    expect(svg).toContain('fill="var(--ct-muted)"> # a comment');
+    expect(svg).toMatch(/fill="var\(--ct-muted\)" x="[\d.-]+"># a comment/);
   });
 });
 
