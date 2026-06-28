@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-import { writeFileSync, readFileSync, realpathSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { parseArgs, USAGE, type CliOptions } from './cli-args.js';
-import { resolveTreeText } from './cli-input.js';
 import { CliError } from './cli-error.js';
 import { RenderError } from '../engine/error.js';
-import { render } from '../index.js';
-import { renderFallback } from '../engine/fallback.js';
+import { renderCommand } from './commands/render.js';
 
 export interface CliIO {
   argv: string[];
@@ -30,23 +28,7 @@ export function runCli(io: CliIO): number {
   }
 
   try {
-    const stdin = io.stdin !== null && io.stdin.trim() !== '' ? io.stdin : null;
-    const tree = resolveTreeText({ text: options.text, file: options.file, stdin });
-    const svg = render(tree, { legend: options.legend });
-    const fallback = options.fallback ? renderFallback(tree, { legend: options.legend }) : null;
-
-    if (options.output !== null) {
-      try {
-        writeFileSync(options.output, svg);
-      } catch {
-        io.stderr(`SVG file could not be created: ${options.output}\n`);
-        return 1;
-      }
-      if (fallback !== null) io.stdout(`${fallback}\n`);
-    } else {
-      io.stdout(fallback !== null ? `${svg}\n\n${fallback}\n` : `${svg}\n`);
-    }
-    return 0;
+    return renderCommand(io, options);
   } catch (err) {
     if (err instanceof CliError || err instanceof RenderError) {
       io.stderr(`${err.message}\n`);
