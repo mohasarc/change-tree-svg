@@ -46,9 +46,9 @@ Input:
 └── ... 6 test files
 ```
 
-Rendered:
+Rendered (scrollable — drag sideways):
 
-![Change Tree example rendered as SVG](examples/stage-3-phase-3/example.png)
+<pre><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p0.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p1.svg" alt=""></picture><picture><img src="https://raw.githubusercontent.com/mohasarc/change-tree-svg/media/trees/mi7mcd/p2.svg" alt=""></picture></pre>
 
 ### What this is not
 
@@ -118,9 +118,22 @@ Output:
 ### A note on SVG in PRs
 
 GitHub strips raw inline SVG from Markdown, so you can't paste the SVG string straight
-into a PR body. Commit the SVG (or a PNG of it) and link it, or paste the
-`renderFallback` plain-text block. The image in this README is a PNG of the rendered SVG
-for the same reason.
+into a PR body. The `embed` command works around this: it slices the render into vertical
+strips, publishes them to an orphan `media` branch in your repo, and prints a `<pre>` of
+`<picture><img>` tags pointing at the raw strip URLs. GitHub renders that as a
+horizontally-scrollable, full-fidelity vector tree inside a PR or comment.
+
+```sh
+change-tree-svg embed -f tree.txt   # prints the <pre> to paste
+```
+
+Repo is auto-detected from `git remote origin`; pass `--repo owner/name` to override.
+Requires `gh` authed (`gh auth login`). The scrollable example above is a live embed
+produced this way.
+
+Embeds render in light mode only — `prefers-color-scheme` is dead inside `<img>`-hosted
+SVG on GitHub. For places that can't show images, paste the `renderFallback` plain-text
+block instead.
 
 ## License
 
