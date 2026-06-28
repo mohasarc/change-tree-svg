@@ -1,0 +1,26 @@
+<style>
+    :root {
+      --ct-fill: rgba(246,248,250,0.85);
+      --ct-path: #24292f;
+      --ct-muted: #57606a;
+      --ct-added: #1a7f37;
+      --ct-changed: #9a6700;
+      --ct-moved: #8250df;
+      --ct-removed: #cf222e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ct-fill: rgba(22,27,34,0.85);
+        --ct-path: #e6edf3;
+        --ct-muted: #8b949e;
+        --ct-added: #3fb950;
+        --ct-changed: #d29922;
+        --ct-moved: #bc8cff;
+        --ct-removed: #f85149;
+      }
+    }
+    text { font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; font-size: 18px; }
+  </style>
+  <text x="21" y="46"><tspan fill="var(--ct-path)">.</tspan></text>
+  <text x="21" y="73"><tspan fill="var(--ct-muted)">└── </tspan><tspan fill="var(--ct-added)">++</tspan><tspan fill="var(--ct-path)"> src/engine/render.ts</tspan><tspan fill="var(--ct-muted)"> # split out renderInner</tspan></text>
+  <text x="21" y="100"><tspan fill="var(--ct-muted)">    └── </tspan><tspan fill="var(--ct-changed)">**</tspan><tspan fill="var(--ct-path)"> renderSvg now composes it</tspan></text>
